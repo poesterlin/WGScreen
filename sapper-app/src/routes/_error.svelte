@@ -35,6 +35,8 @@
 
 <p>{error.message}</p>
 
+<a href="/">Zurück</a>
+
 {#if dev && error.stack}
 	<pre>{error.stack}</pre>
 {/if}

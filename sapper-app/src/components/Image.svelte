@@ -4,6 +4,7 @@
   export let round;
 
   const host = "http://localhost:1337";
+  $: sized = image?.formats[size];
 </script>
 
 <style>
@@ -17,8 +18,10 @@
 
 {#if image}
   <img
+    :width={sized.width}
+    :height={sized.height}
     class:round
-    src={host + image.formats[size].url}
+    src={host + sized.url}
     loading="lazy"
     alt={image.alternativeText} />
 {/if}

@@ -1,6 +1,7 @@
 <script context="module">
   import axios from "axios";
   import marked from "marked";
+  import { humanReadableDate } from "../../helpers/date";
 
   export async function preload({ params }) {
     // the `slug` parameter is available because
@@ -8,6 +9,7 @@
     const res = await axios.get("http://localhost:1337/events/" + params.slug);
     const event = res.data;
     event.description = marked(event.description || "");
+    event.date = humanReadableDate(event.date);
 
     if (res.status === 200) {
       return { event };
@@ -36,5 +38,5 @@
   {@html event.description}
 </div>
 
-
+{event.date}
 <Image image={event.image} size="large" />

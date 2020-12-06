@@ -1,5 +1,9 @@
 <script lang="ts">
 	export let segment;
+
+	const month = new Date().getMonth();
+	const year = new Date().getFullYear();
+
 </script>
 
 <style>
@@ -47,12 +51,11 @@
 		display: block;
 	}
 </style>
-
 <nav>
 	<ul>
 		<li><a aria-current="{segment === undefined ? 'page' : undefined}" href=".">Home</a></li>
 		<li><a rel=prefetch aria-current="{segment === 'events' ? 'page' : undefined}" href="events">Events</a></li>
+		<li><a rel=prefetch aria-current="{parseInt(segment) + 1 ? 'page' : undefined}" href="{month}/{year}/calender">Kalender</a></li>
 		<li><a rel=prefetch aria-current="{segment === 'guests' ? 'page' : undefined}" href="guests">Gäste</a></li>
-		<li><a rel=prefetch aria-current="{segment === 'calender' ? 'page' : undefined}" href="calender">Kalender</a></li>
 	</ul>
 </nav>

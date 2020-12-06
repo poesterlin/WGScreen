@@ -2,6 +2,14 @@
   "routes": [
     {
       "method": "GET",
+      "path": "/events/upcoming",
+      "handler": "event.future",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
       "path": "/events",
       "handler": "event.find",
       "config": {

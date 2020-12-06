@@ -5,21 +5,32 @@
 </script>
 
 <style>
-  div {
-    border: 1px solid black;
+  .element {
+    margin: 140px auto;
+    border: 1px solid gray;
+    padding: 20px;
+    box-shadow: 2px 3px #ff5e2a;
+  }
+
+  a {
+    text-decoration: none;
   }
 </style>
 
-<div class="title">
-  <a rel="prefetch" href="events/{data.id}">{data.title}</a>
-</div>
-<div class="desc">
-  {@html data.description}
-</div>
+<a rel="prefetch" href="events/{data.id}">
+  <div class="element">
+    <h3>{data.title}</h3>
+    <div>
+      <Image image={data.image} />
+    </div>
+    <div class="desc">
+      {@html data.description}
+    </div>
+    <div>{data.date}</div>
 
-{#each data.participants as guest}
-  <Guest data={guest} />
-{/each}
+    {#each data.participants as guest}
+      <Guest data={guest} />
+    {/each}
+  </div>
 
-{data.date}
-<Image image={data.image} />
+</a>
