@@ -5,8 +5,15 @@
 
 <style>
   a {
-    display: block;
+    display: flex;
     text-decoration: none;
+    align-items: center;
+    flex: 1 1 120px;
+    max-width: min-content;
+    justify-content: space-around;
+  }
+  span {
+    margin-right: 5px;
   }
 </style>
 

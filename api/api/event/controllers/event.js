@@ -8,7 +8,9 @@ const { sanitizeEntity } = require('strapi-utils');
 
 module.exports = {
     async future(_ctx) {
-        const entities = await strapi.query('event').find({ date_gt: new Date().toISOString(), _sort: 'date:desc' })
+        const d = new Date();
+        d.setDate(d.getDate() - 1)
+        const entities = await strapi.query('event').find({ date_gt: d.toISOString(), _sort: 'date:asc' })
         return entities.map(entity => sanitizeEntity(entity, { model: strapi.models.event }));
     },
 };

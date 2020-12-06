@@ -1,7 +1,16 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
   import Image from "./Image.svelte";
   import Guest from "./Guest.svelte";
+  import axios from "axios";
   export let data;
+
+  const dispatch = createEventDispatcher();
+
+  async function deleteEvent() {
+    await axios.delete("http://localhost:1337/events/" + data.id);
+    dispatch("delete", { id: data.id });
+  }
 </script>
 
 <style>
@@ -15,10 +24,18 @@
   a {
     text-decoration: none;
   }
+
+  .element:hover button {
+    opacity: 1;
+  }
+
+  button {
+    opacity: 0;
+  }
 </style>
 
-<a rel="prefetch" href="events/{data.id}">
-  <div class="element">
+<div class="element">
+  <a rel="prefetch" href="events/{data.id}">
     <h3>{data.title}</h3>
     <div>
       <Image image={data.image} />
@@ -27,10 +44,9 @@
       {@html data.description}
     </div>
     <div>{data.date}</div>
-
-    {#each data.participants as guest}
-      <Guest data={guest} />
-    {/each}
-  </div>
-
-</a>
+  </a>
+  {#each data.participants as guest}
+    <Guest data={guest} />
+  {/each}
+  <button on:click|stopPropagation={() => deleteEvent()}>Löschen</button>
+</div>
