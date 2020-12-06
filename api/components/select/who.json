@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_select_whos",
+  "info": {
+    "name": "who",
+    "icon": "people-carry"
+  },
+  "options": {},
+  "attributes": {
+    "Participant": {
+      "type": "json"
+    }
+  }
+}
