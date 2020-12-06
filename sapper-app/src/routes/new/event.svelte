@@ -1,4 +1,11 @@
-<script>
+<script context="module">
+  export async function preload(_page, session) {
+    return { SERVER: session.SERVER };
+  }
+</script>
+
+<script lang="ts">
+  export let SERVER;
   import axios from "axios";
   import { goto } from "@sapper/app";
 
@@ -6,15 +13,15 @@
   let description = "";
 
   async function submit() {
-    const res = await axios.post("http://localhost:1337/events", {
+    const res = await axios.post(SERVER + "/events", {
       title,
       description,
       participants: [1],
-      date: new Date().toISOString()
+      date: new Date().toISOString(),
     });
     console.log("done");
     console.log(res);
-    goto("/events")
+    goto("/events");
   }
 </script>
 

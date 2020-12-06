@@ -2,7 +2,7 @@
   import axios from "axios";
   import { isOnDate } from "../../../helpers/date";
 
-  export async function preload({ params }) {
+  export async function preload({ params }, session) {
     let { month, year } = params;
     month = parseInt(month);
     year = parseInt(year);
@@ -12,16 +12,16 @@
       this.error(400, "wrong calender date");
     }
 
-    const res = await axios.get("http://localhost:1337/events");
+    const res = await axios.get(session.SERVER + "/events");
     const events = res.data;
 
     const days = new Array(nrDays)
       .fill(undefined)
       .map((_, day) => new Date(year, month, day + 1))
-      .map(d => {
+      .map((d) => {
         return {
           date: d.getDate(),
-          events: events.filter(e => isOnDate(e.date, d))
+          events: events.filter((e) => isOnDate(e.date, d)),
         };
       });
 
@@ -51,11 +51,11 @@
 <a rel="prefetch" href={prev}>zurück</a>
 <a rel="prefetch" href={next}>vor</a>
 <h1>Kalender</h1>
-{month} {year}
+{month}
+{year}
 {#each days as day}
   <div>
     {day.date}
-    {#each day.events as e}
-    <a href="events/{e.id}">{e.title}</a>{/each}
+    {#each day.events as e}<a href="events/{e.id}">{e.title}</a>{/each}
   </div>
 {/each}

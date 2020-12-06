@@ -1,10 +1,9 @@
 <script context="module">
   import axios from "axios";
-  import marked from "marked";
 
-  export async function preload() {
-    const res = await axios.get("http://localhost:1337/guests");
-    const guests = res.data.map(guest => {
+  export async function preload(_, session) {
+    const res = await axios.get(session.SERVER + "/guests");
+    const guests = res.data.map((guest) => {
       return guest;
     });
     return { guests };

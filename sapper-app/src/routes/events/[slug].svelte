@@ -3,10 +3,10 @@
   import marked from "marked";
   import { humanReadableDate } from "../../helpers/date";
 
-  export async function preload({ params }) {
+  export async function preload({ params }, session) {
     // the `slug` parameter is available because
     // this file is called [slug].svelte
-    const res = await axios.get("http://localhost:1337/events/" + params.slug);
+    const res = await axios.get(session.SERVER + "/events/" + params.slug);
     const event = res.data;
     event.description = marked(event.description || "");
     event.date = humanReadableDate(event.date);
@@ -25,7 +25,6 @@
 </script>
 
 <style>
-
 </style>
 
 <svelte:head>

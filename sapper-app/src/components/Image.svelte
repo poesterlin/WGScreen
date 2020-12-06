@@ -1,9 +1,16 @@
+<script context="module">
+  export async function preload(_page, session) {
+    return { SERVER: session.SERVER };
+  }
+</script>
+
 <script lang="ts">
+  export let SERVER;
+
   export let image;
   export let size = "thumbnail";
   export let round;
 
-  const host = "http://localhost:1337";
   $: sized = image?.formats[size];
 </script>
 
@@ -18,10 +25,10 @@
 
 {#if image}
   <img
-    :width={sized.width}
-    :height={sized.height}
+    width={sized.width}
+    height={sized.height}
     class:round
-    src={host + sized.url}
+    src={SERVER + sized.url}
     loading="lazy"
     alt={image.alternativeText} />
 {/if}

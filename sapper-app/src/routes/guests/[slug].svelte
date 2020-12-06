@@ -1,17 +1,16 @@
 <script context="module" lang="ts">
   import axios from "axios";
-  import marked from "marked";
   import { humanReadableDate } from "../../helpers/date";
 
-  export async function preload({ params }) {
-    const res = await axios.get("http://localhost:1337/guests/" + params.slug);
+  export async function preload({ params }, session) {
+    const res = await axios.get(session.SERVER + "/guests/" + params.slug);
     const guest = res.data;
     guest.birthday = humanReadableDate(guest.birthday);
 
     if (res.status === 200) {
       return { guest };
     } else {
-      this.error(res.status, data.message);
+      this.error(res.status, res.data.message);
     }
   }
 </script>
@@ -22,7 +21,6 @@
 </script>
 
 <style>
-
 </style>
 
 <svelte:head>
@@ -32,4 +30,5 @@
 <h1>{guest.name}</h1>
 
 <Image image={guest.picture} size="large" round />
-Birthday: {guest.birthday}
+Birthday:
+{guest.birthday}

@@ -5,9 +5,10 @@
   "description": "A Strapi application",
   "scripts": {
     "develop": "strapi develop",
-    "start": "strapi develop",
+    "start": "strapi start",
     "build": "strapi build",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "server": "pm2 start server.js --name strapi"
   },
   "devDependencies": {},
   "dependencies": {

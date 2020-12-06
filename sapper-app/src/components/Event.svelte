@@ -1,4 +1,11 @@
+<script context="module">
+  export async function preload(_page, session) {
+    return { SERVER: session.SERVER };
+  }
+</script>
+
 <script lang="ts">
+  export let SERVER;
   import { createEventDispatcher } from "svelte";
   import Image from "./Image.svelte";
   import Guest from "./Guest.svelte";
@@ -8,7 +15,7 @@
   const dispatch = createEventDispatcher();
 
   async function deleteEvent() {
-    await axios.delete("http://localhost:1337/events/" + data.id);
+    await axios.delete(SERVER + "/events/" + data.id);
     dispatch("delete", { id: data.id });
   }
 </script>
