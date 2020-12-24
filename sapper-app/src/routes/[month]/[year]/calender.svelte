@@ -3,6 +3,10 @@
   import { isOnDate } from "../../../helpers/date";
   import { server } from "../../../helpers/env";
 
+  function mod(n, m) {
+    return ((n % m) + m) % m;
+  }
+
   export async function preload({ params }) {
     let { month, year } = params;
     month = parseInt(month);
@@ -18,16 +22,21 @@
 
     const days = new Array(nrDays)
       .fill(undefined)
-      .map((_, day) => new Date(year, month, day + 1))
-      .map(d => {
-        return {
-          date: d.getDate(),
-          events: events.filter(e => isOnDate(e.date, d))
-        };
-      });
+      .map((_, day) => new Date(year, month - 1, day + 1))
+      .map((d, i) => ({
+        date: i + 1,
+        events: events.filter(e => isOnDate(e.date, d))
+      }));
+
+    const firstDay = new Date(year, month - 1, 1).getDay();
 
     if (res.status === 200) {
-      return { days, month, year };
+      return {
+        days,
+        month,
+        year,
+        offset: mod(firstDay - 1, 7)
+      };
     } else {
       this.error(res.status, data.message);
     }
@@ -35,6 +44,7 @@
 </script>
 
 <script>
+  export let offset;
   export let days;
   export let month;
   export let year;
@@ -43,20 +53,125 @@
   $: prev = `${month === 1 ? 12 : month - 1}/${
     month === 1 ? year - 1 : year
   }/calender`;
+
+  $: fixedMonth = month < 10 ? "0" + month : month;
+
+  const daysOfWeek = [
+    "Montag",
+    "Dienstag",
+    "Mittwoch",
+    "Donnerstag",
+    "Freitag",
+    "Samstag",
+    "Sonntag"
+  ];
 </script>
 
 <style>
-  /* your styles go here */
+  .space-between {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #nav {
+    margin: 10px 0px 50px;
+  }
+
+  button:hover,
+  #day:hover {
+    box-shadow: 1px 2px #797979;
+  }
+
+  button {
+    box-shadow: 1px 2px #d3d3d3;
+    border: 1px solid gray;
+    padding: 0px 4px 0px 5px;
+    cursor: pointer;
+    background: white;
+    height: 40px;
+    width: 112px;
+    line-height: 1px;
+    outline: 0;
+    font-size: 30px;
+    margin: 0 6px;
+  }
+
+  #calender {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    width: 100%;
+  }
+
+  #day > a {
+    margin-left: 3px;
+    max-width: calc(calc(100vw - 170px) / 7);
+    text-overflow: ellipsis;
+    display: inline-block;
+    overflow: hidden;
+    text-decoration: underline;
+  }
+  #day {
+    display: block;
+    height: 100px;
+    border: 1px solid #949494;
+    margin: 3px;
+  }
+
+  b {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+  }
+
+  .grey {
+    border: 1px solid #c0c0c0 !important;
+    background: #e6e6e6;
+  }
+
+  .names {
+    height: 30px;
+    text-align: center;
+    font-weight: bold;
+    color: #363636;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  span {
+    color: #ff5e2a;
+  }
 </style>
 
-<a rel="prefetch" href={prev}>zurück</a>
-<a rel="prefetch" href={next}>vor</a>
-<h1>Kalender</h1>
-{month} {year}
-{#each days as day}
+<h1 class="space-between">
+  Kalender
   <div>
-    {day.date}
-    {#each day.events as e}
-    <a href="events/{e.id}">{e.title}</a>{/each}
+    <span>{fixedMonth}</span>
+    {year}
   </div>
-{/each}
+</h1>
+<div id="nav" class="space-between">
+  <a rel="prefetch" href={prev} sapper:noscroll>
+    <button>&lt;</button>
+  </a>
+  <a rel="prefetch" href={next} sapper:noscroll>
+    <button>&gt;</button>
+  </a>
+</div>
+<div id="calender">
+  {#each daysOfWeek as day}
+    <div class="names">{day}</div>
+  {/each}
+  {#each new Array(offset).fill(1) as _}
+    <div class="grey" />
+  {/each}
+  {#each days as day}
+    <div id="day">
+      <b>{day.date}</b>
+      {#each day.events as e}
+        <a href="events/{e.id}">{e.title}</a>
+      {/each}
+    </div>
+  {/each}
+</div>
