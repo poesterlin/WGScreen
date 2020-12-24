@@ -5,8 +5,6 @@
   import { server } from "../../helpers/env";
 
   export async function preload({ params }, session) {
-    // the `slug` parameter is available because
-    // this file is called [slug].svelte
     const res = await axios.get(server + "events/" + params.slug);
     const event = res.data;
     event.description = marked(event.description || "");

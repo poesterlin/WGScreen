@@ -1,4 +1,4 @@
-]<script lang="ts">
+<script lang="ts">
   import { server } from "../helpers/env";
   import { createEventDispatcher } from "svelte";
   export let image;
