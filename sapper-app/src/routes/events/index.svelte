@@ -26,10 +26,16 @@
   }
 </script>
 
+<style>
+  .event + .event {
+    margin-top: 40px;
+  }
+</style>
+
 <a href="new/event">Neues Event</a>
 
 {#each events as event}
-  <div transition:slide>
+  <div class="event" transition:slide>
     <Event data={event} on:delete={e => remove(e)} />
   </div>
 {/each}
