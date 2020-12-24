@@ -2,10 +2,11 @@
   import axios from "axios";
   import marked from "marked";
   import { humanReadableDate } from "../../helpers/date";
+  import { server } from "../../helpers/env";
   import { slide } from "svelte/transition";
 
   export async function preload() {
-    const res = await axios.get("http://localhost:1337/events/upcoming");
+    const res = await axios.get(server + "events/upcoming");
     const events = res.data.map(event => {
       event.description = marked(event.description || "");
       event.date = humanReadableDate(event.date);

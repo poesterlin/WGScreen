@@ -2,9 +2,10 @@
   import axios from "axios";
   import marked from "marked";
   import { humanReadableDate } from "../../helpers/date";
+  import { server } from "../../helpers/env";
 
   export async function preload({ params }) {
-    const res = await axios.get("http://localhost:1337/guests/" + params.slug);
+    const res = await axios.get(server + "guests/" + params.slug);
     const guest = res.data;
     guest.birthday = humanReadableDate(guest.birthday);
 

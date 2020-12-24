@@ -3,12 +3,13 @@
   import Image from "./Image.svelte";
   import Guest from "./Guest.svelte";
   import axios from "axios";
+  import { server } from "../helpers/env";
   export let data;
 
   const dispatch = createEventDispatcher();
 
   async function deleteEvent() {
-    await axios.delete("http://localhost:1337/events/" + data.id);
+    await axios.delete(server + "events/" + data.id);
     dispatch("delete", { id: data.id });
   }
 </script>

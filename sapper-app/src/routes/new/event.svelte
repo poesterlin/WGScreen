@@ -1,12 +1,13 @@
 <script>
   import axios from "axios";
   import { goto } from "@sapper/app";
+  import { server } from "../../helpers/env";
 
   let title = "";
   let description = "";
 
   async function submit() {
-    const res = await axios.post("http://localhost:1337/events", {
+    const res = await axios.post(server + "events", {
       title,
       description,
       participants: [1],
