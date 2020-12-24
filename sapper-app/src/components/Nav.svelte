@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let segment;
 
-	const month = new Date().getMonth();
+	const month = new Date().getMonth() + 1;
 	const year = new Date().getFullYear();
 
 </script>
