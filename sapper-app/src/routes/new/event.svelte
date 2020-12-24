@@ -1,19 +1,13 @@
-<script context="module">
-  export async function preload(_page, session) {
-    return { SERVER: session.SERVER };
-  }
-</script>
-
 <script lang="ts">
-  export let SERVER;
   import axios from "axios";
   import { goto } from "@sapper/app";
+  import { server } from "../../helpers/env";
 
   let title = "";
   let description = "";
 
   async function submit() {
-    const res = await axios.post(SERVER + "/events", {
+    const res = await axios.post(server + "events", {
       title,
       description,
       participants: [1],

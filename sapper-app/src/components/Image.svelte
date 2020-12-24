@@ -1,17 +1,15 @@
-<script context="module">
-  export async function preload(_page, session) {
-    return { SERVER: session.SERVER };
-  }
-</script>
-
-<script lang="ts">
-  export let SERVER;
-
+]<script lang="ts">
+  import { server } from "../helpers/env";
+  import { createEventDispatcher } from "svelte";
   export let image;
   export let size = "thumbnail";
-  export let round;
+  export let round = false;
+  export let cover = false;
+
+  const dispatch = createEventDispatcher();
 
   $: sized = image?.formats[size];
+  $: host = server.slice(0, -1);
 </script>
 
 <style>
@@ -21,14 +19,22 @@
     object-fit: cover;
     border-radius: 50%;
   }
+
+  .cover {
+    background-size: cover;
+    max-width: 100%;
+    max-height: 100%;
+  }
 </style>
 
 {#if image}
   <img
-    width={sized.width}
-    height={sized.height}
+    on:click={()=>dispatch("select")}
+    :width={sized.width}
+    :height={sized.height}
     class:round
-    src={SERVER + sized.url}
+    class:cover
+    src={host + sized.url}
     loading="lazy"
     alt={image.alternativeText} />
 {/if}
