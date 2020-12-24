@@ -55,7 +55,7 @@ export function humanReadableDate(date: Date | string) {
             month: 'short',
             day: 'numeric'
         })
-        return `${modifier} ${weeks} Wochen (${day})`
+        return `${modifier} ${Math.abs(weeks)} Wochen (${day})`
     }
 
     return comp.toLocaleDateString('de-DE', {
