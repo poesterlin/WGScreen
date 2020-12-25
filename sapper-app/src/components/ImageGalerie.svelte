@@ -1,12 +1,23 @@
 <script lang="ts">
   import { goto } from "@sapper/app";
   import Image from "./Image.svelte";
+  import { mod } from "../helpers/math";
 
   export let images = [];
+  export let onSelect = id => goto("/events/" + id);
+  export let noControls = false;
+
   let current = 0;
+  let interval;
 
   function point(op) {
-    current = (current + op) % images.length;
+    current = mod(current + op, images.length);
+    makeInterval();
+  }
+
+  function makeInterval() {
+    clearInterval(interval);
+    interval = setInterval(() => point(1), 20 * 1000);
   }
 </script>
 
@@ -15,7 +26,6 @@
     display: flex;
     position: relative;
     width: 100%;
-    height: 100%;
     overflow: hidden;
     justify-content: center;
     align-items: center;
@@ -36,17 +46,20 @@
     color: #323232;
     margin: 0 2px;
     height: 35px;
+    border-radius: 5px;
   }
 </style>
 
 <div id="container">
   <Image
-    on:select={() => goto('/events/' + images[current].id)}
+    on:select={() => onSelect(images[current].id)}
     image={images[current].img}
     size="medium"
     cover />
-  <div id="spacer">
-    <button on:click={() => point(-1)}>&lt;</button>
-    <button on:click={() => point(1)}>&gt;</button>
-  </div>
+  {#if !noControls}
+    <div id="spacer">
+      <button on:click={() => point(-1)}>&lt;</button>
+      <button on:click={() => point(1)}>&gt;</button>
+    </div>
+  {/if}
 </div>
