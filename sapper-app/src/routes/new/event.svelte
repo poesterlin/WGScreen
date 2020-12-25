@@ -25,7 +25,7 @@
 
 <!-- markup (zero or more items) goes here -->
 
-<input value={title} placeholder="Titel" type="text" />
-<input value={description} placeholder="Beschreibung" type="text" />
+<input bind:value={title} placeholder="Titel" type="text" />
+<input bind:value={description} placeholder="Beschreibung" type="text" />
 
 <button on:click={() => submit()}>Erstellen</button>

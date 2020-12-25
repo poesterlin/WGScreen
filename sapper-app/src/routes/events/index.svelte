@@ -22,7 +22,7 @@
   export let events = [];
 
   function remove({ detail }) {
-    events = events.filter((e) => e.id !== detail.id);
+    events = events.filter(e => e.id !== detail.id);
   }
 </script>
 
@@ -30,9 +30,33 @@
   .event + .event {
     margin-top: 40px;
   }
+
+  a:hover {
+    box-shadow: 2px 4px #000000;
+    color: white;
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.226);
+  }
+
+  a {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    text-decoration: none;
+    border-radius: 30px;
+    border: 1px solid #26ab8c;
+    color: white;
+    box-shadow: 2px 2px #383838;
+    background: hsl(180, 50%, 80%);
+    z-index: 10;
+    width: 192px;
+    height: 50px;
+    font-size: 25px;
+    padding: 13px 0px 2px 8px;
+    text-transform: uppercase;
+  }
 </style>
 
-<a href="new/event">Neues Event</a>
+<a href="new/event">+ Hinzufügen</a>
 
 {#each events as event}
   <div class="event" transition:slide>

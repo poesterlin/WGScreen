@@ -22,35 +22,42 @@
 <script>
   import Event from "../components/Event.svelte";
   import ImageGalerie from "../components/ImageGalerie.svelte";
+  import ShopingCart from "../components/ShopingCart.svelte";
   export let nextEvent;
   export let images;
+  let wakeLock;
+
+  async function requestWakeLock() {
+    try {
+      wakeLock = await window.navigator.wakeLock.request("screen");
+
+      wakeLock.addEventListener("release", () => {
+        console.log("can go sleep");
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 </script>
 
 <style>
-  h3 {
-    text-align: center;
-    margin: 0 auto;
-    font-size: 2.8em;
-    text-transform: uppercase;
-    font-weight: 700;
-    margin: 0 0 0.5em 0;
-  }
-
   #container > div {
-    width: 40vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 
-  #container > div:nth-child(2n) > h4 {
-    text-align: right;
+  #container > div:nth-child(2n) > a {
+    height: 100%;
+  }
+  #container > div:nth-child(2n) {
+    justify-content: flex-end;
   }
 
   #container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 10px;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
   }
 
   button {
@@ -59,7 +66,7 @@
     font-size: 60px;
     padding-bottom: 0px;
     align-items: center;
-    min-height: 145px;
+    height: calc(100% - 40px);
     border: 1px solid #b7b7b7;
     color: gray;
     width: 100%;
@@ -67,8 +74,17 @@
     cursor: pointer;
   }
 
-  a {
+  .content {
     text-decoration: none;
+    flex: 1 1 100%;
+    height: 100%;
+    min-height: 100%;
+    position: relative;
+  }
+
+  h4 {
+    color: gray;
+    margin-top: 15px;
   }
 </style>
 
@@ -76,22 +92,36 @@
   <title>Infoscreen</title>
 </svelte:head>
 
-<h3>Hallo Besucher</h3>
+<!-- <span on:click={() => requestWakeLock()}>lock screen on</span> -->
 
 <div id="container">
   <div>
-    <h4>Nächstes Event:</h4>
-    <Event data={nextEvent} />
+    <h4>Nächstes Event</h4>
+    <div class="content">
+      <Event
+        on:delete={() => document.location.reload()}
+        data={nextEvent}
+        showDesc={false}
+        showOptions={false} />
+    </div>
   </div>
 
   <div>
-    <h4>Event hinzufügen:</h4>
-    <a href="/new/event">
+    <h4>Event erstellen</h4>
+    <a href="/new/event" class="content">
       <button>+</button>
     </a>
   </div>
 
   <div>
+    <h4>Einkaufszettel</h4>
+    <div class="content">
+      <ShopingCart />
+    </div>
+  </div>
+
+  <div>
+    <h4>Galerie</h4>
     <ImageGalerie {images} />
   </div>
 

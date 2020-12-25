@@ -6,6 +6,8 @@
   import axios from "axios";
   import { server } from "../helpers/env";
   export let data;
+  export let showDesc = true;
+  export let showOptions = true;
 
   let options;
 
@@ -38,24 +40,28 @@
   }
 </style>
 
-<div class="element" on:mouseout={() => options.close()}>
+<div class="element">
   <a rel="prefetch" href="events/{data.id}">
     <h3>{data.title}</h3>
     <div>
       <Image image={data.image} />
     </div>
-    <div class="desc">
-      {@html data.description}
-    </div>
+    {#if showDesc}
+      <div class="desc">
+        {@html data.description}
+      </div>
+    {/if}
     <div>{data.date}</div>
   </a>
   {#each data.participants as guest}
     <Guest data={guest} />
   {/each}
-  <div id="options">
-    <Options bind:this={options}>
-      <button on:click={() => console.log('edit')}>Edit</button>
-      <button on:click={() => deleteEvent()}>Delete</button>
-    </Options>
-  </div>
+  {#if showOptions}
+    <div id="options">
+      <Options>
+        <button on:click={() => console.log('edit')}>Edit</button>
+        <button on:click={() => deleteEvent()}>Delete</button>
+      </Options>
+    </div>
+  {/if}
 </div>
