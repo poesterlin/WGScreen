@@ -2,10 +2,7 @@
   import axios from "axios";
   import { isOnDate } from "../../../helpers/date";
   import { server } from "../../../helpers/env";
-
-  function mod(n, m) {
-    return ((n % m) + m) % m;
-  }
+  import { mod } from "../../../helpers/math";
 
   export async function preload({ params }) {
     let { month, year } = params;
@@ -94,6 +91,11 @@
     outline: 0;
     font-size: 30px;
     margin: 0 6px;
+    border-radius: 5px;
+  }
+
+  #calender > div {
+    margin: 3px;
   }
 
   #calender {
