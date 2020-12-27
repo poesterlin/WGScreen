@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { stores } from "@sapper/app";
+  const { session } = stores();
+
   export let status: number;
   export let error: Error;
 
@@ -33,11 +36,14 @@
 </svelte:head>
 
 <h1>{status}</h1>
+{#if $session.authenticated}
+  <p>{error.message}</p>
 
-<p>{error.message}</p>
+  <a href="/">Zurück</a>
 
-<a href="/">Zurück</a>
-
-{#if dev && error.stack}
-  <pre>{error.stack}</pre>
+  {#if dev && error.stack}
+    <pre>{error.stack}</pre>
+  {/if}
+{:else}
+  <a href="/login">Anmelden</a>
 {/if}

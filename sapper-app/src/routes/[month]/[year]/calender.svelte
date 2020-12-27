@@ -1,10 +1,10 @@
 <script context="module">
   import axios from "axios";
   import { isOnDate } from "../../../helpers/date";
-  import { server } from "../../../helpers/env";
+  import { server, makeAuth } from "../../../helpers/env";
   import { mod } from "../../../helpers/math";
 
-  export async function preload({ params }) {
+  export async function preload({ params }, session) {
     let { month, year } = params;
     month = parseInt(month);
     year = parseInt(year);
@@ -14,7 +14,7 @@
       this.error(400, "wrong calender date");
     }
 
-    const res = await axios.get(server + "events");
+    const res = await axios.get(server + "events", makeAuth(session));
     const events = res.data;
 
     const days = new Array(nrDays)

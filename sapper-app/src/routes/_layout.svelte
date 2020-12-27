@@ -1,7 +1,22 @@
 <script lang="ts">
   import Nav from "../components/Nav.svelte";
-  export let segment;
+  import routes from "../routes";
+  import { guard } from "@beyonk/sapper-rbac";
+  import { tick } from "svelte";
+  import { stores, goto } from "@sapper/app";
 
+  export let segment;
+  const { page, session } = stores();
+
+  const options = {
+    routes,
+    deny: () => goto("/login")
+  };
+
+  page.subscribe(async v => {
+    await tick(); // let the previous routing finish first.
+    guard(v.path, { scope: ["screen"] }, options);
+  });
 </script>
 
 <style>

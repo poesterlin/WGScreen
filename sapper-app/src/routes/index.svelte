@@ -2,15 +2,15 @@
   import axios from "axios";
   import marked from "marked";
   import { humanReadableDate } from "../helpers/date";
-  import { server } from "../helpers/env";
+  import { server, makeAuth } from "../helpers/env";
 
-  export async function preload() {
-    const event = (await axios.get(server + "events/upcoming?_limit=1"))
+  export async function preload(_, session) {
+    const event = (await axios.get(server + "events/upcoming?_limit=1", makeAuth(session)))
       .data[0];
     event.description = marked(event.description || "");
     event.date = humanReadableDate(event.date);
 
-    const events = await axios.get(server + "events");
+    const events = await axios.get(server + "events", makeAuth(session));
     const images = events.data
       .filter(e => e.image)
       .map(e => ({ img: e.image, id: e.id }));

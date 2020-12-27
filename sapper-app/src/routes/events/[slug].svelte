@@ -2,10 +2,10 @@
   import axios from "axios";
   import marked from "marked";
   import { humanReadableDate } from "../../helpers/date";
-  import { server } from "../../helpers/env";
+  import { server, makeAuth } from "../../helpers/env";
 
   export async function preload({ params }, session) {
-    const res = await axios.get(server + "events/" + params.slug);
+    const res = await axios.get(server + "events/" + params.slug, makeAuth(session));
     const event = res.data;
     event.description = marked(event.description || "");
     event.date = humanReadableDate(event.date);

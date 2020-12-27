@@ -2,11 +2,11 @@
   import axios from "axios";
   import marked from "marked";
   import { humanReadableDate } from "../../helpers/date";
-  import { server } from "../../helpers/env";
+  import { server, makeAuth } from "../../helpers/env";
   import { slide } from "svelte/transition";
 
-  export async function preload() {
-    const res = await axios.get(server + "events/upcoming");
+  export async function preload(_, session) {
+    const res = await axios.get(server + "events/upcoming", makeAuth(session));
     const events = res.data.map(event => {
       event.description = marked(event.description || "");
       event.date = humanReadableDate(event.date);
@@ -34,7 +34,6 @@
   a:hover {
     box-shadow: 2px 4px #000000;
     color: white;
-    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.226);
   }
 
   a {

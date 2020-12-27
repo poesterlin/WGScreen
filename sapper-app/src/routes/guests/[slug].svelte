@@ -1,10 +1,10 @@
 <script context="module" lang="ts">
   import axios from "axios";
   import { humanReadableDate } from "../../helpers/date";
-  import { server } from "../../helpers/env";
+  import { server , makeAuth} from "../../helpers/env";
 
-  export async function preload({ params }) {
-    const res = await axios.get(server + "guests/" + params.slug);
+  export async function preload({ params }, session) {
+    const res = await axios.get(server + "guests/" + params.slug, makeAuth(session));
     const guest = res.data;
     guest.birthday = humanReadableDate(guest.birthday);
 
