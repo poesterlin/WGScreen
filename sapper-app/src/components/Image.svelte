@@ -22,13 +22,17 @@
   }
   .round {
     width: 60px;
+    min-width: 60px;
     height: 60px;
+    max-width: 60px;
+    max-height: 60px;
     object-fit: cover;
     border-radius: 50%;
   }
 
   .cover {
-    background-size: cover;
+    background-size: cover !important;
+    overflow: hidden;
   }
 </style>
 

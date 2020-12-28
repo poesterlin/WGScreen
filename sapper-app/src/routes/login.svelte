@@ -2,7 +2,7 @@
   import axios from "axios";
   import { goto } from "@sapper/app";
 
-  let pin = "1234";
+  let pin = "";
 
   async function send() {
     await axios.get("testpin/" + pin, { withCredentials: true });

@@ -18,5 +18,7 @@
 </script>
 
 {#each guests as guest}
-  <Guest data={guest} />
+  <a rel="prefetch" href="guests/{guest.id}">
+    <Guest data={guest} />
+  </a>
 {/each}

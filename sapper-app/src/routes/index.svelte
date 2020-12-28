@@ -5,8 +5,10 @@
   import { server, makeAuth } from "../helpers/env";
 
   export async function preload(_, session) {
-    const event = (await axios.get(server + "events/upcoming?_limit=1", makeAuth(session)))
-      .data[0];
+    const event = (await axios.get(
+      server + "events/upcoming?_limit=1",
+      makeAuth(session)
+    )).data[0];
     event.description = marked(event.description || "");
     event.date = humanReadableDate(event.date);
 
@@ -80,6 +82,7 @@
     height: 100%;
     min-height: 100%;
     position: relative;
+    max-width: calc(50vw - 100px);
   }
 
   h4 {

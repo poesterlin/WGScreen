@@ -4,17 +4,19 @@
   import Image from "./Image.svelte";
   import Guest from "./Guest.svelte";
   import axios from "axios";
-  import { server } from "../helpers/env";
+  import { server, makeAuth } from "../helpers/env";
+  import { stores } from "@sapper/app";
+  const { session } = stores();
+
   export let data;
   export let showDesc = true;
   export let showOptions = true;
 
   let options;
-
   const dispatch = createEventDispatcher();
 
   async function deleteEvent() {
-    await axios.delete(server + "events/" + data.id);
+    await axios.delete(server + "events/" + data.id, makeAuth($session));
     dispatch("delete", { id: data.id });
   }
 </script>
@@ -38,6 +40,30 @@
   a {
     text-decoration: none;
   }
+
+  #guestList {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+  }
+
+  .guest {
+    flex: 1 1 150px;
+    max-width: min-content;
+    margin: 5px 5px 0;
+    background: #f8efec;
+    padding: 3px 14px;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+
+  #date {
+    margin-top: 15px;
+    font-weight: bold;
+    text-align: right;
+    color: #424242;
+  }
 </style>
 
 <div class="element">
@@ -51,11 +77,19 @@
         {@html data.description}
       </div>
     {/if}
-    <div>{data.date}</div>
   </a>
-  {#each data.participants as guest}
-    <Guest data={guest} />
-  {/each}
+  {#if data.participants.length > 0}
+    <div id="guestList">
+      {#each data.participants as guest}
+        <div class="guest">
+          <a rel="prefetch" href="guests/{guest.id}">
+            <Guest data={guest} />
+          </a>
+        </div>
+      {/each}
+    </div>
+  {/if}
+  <div id="date">{data.date}</div>
   {#if showOptions}
     <div id="options">
       <Options>

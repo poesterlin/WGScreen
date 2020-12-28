@@ -4,20 +4,21 @@
 </script>
 
 <style>
-  a {
+  div {
     display: flex;
-    text-decoration: none;
     align-items: center;
-    flex: 1 1 120px;
+    flex: 1 1 100%;
+    height: 100%;
     max-width: min-content;
-    justify-content: space-around;
+    min-width: 100%;
+    justify-content: space-between;
   }
   span {
     margin-right: 5px;
   }
 </style>
 
-<a rel="prefetch" href="guests/{data.id}">
+<div>
   <span>{data.name}</span>
-  <Image round image={data.picture} />
-</a>
+  <Image round image={data.picture} cover />
+</div>
