@@ -1,5 +1,11 @@
 import { isAfter, isSameDay, differenceInCalendarISOWeeks, getDate, differenceInCalendarDays } from 'date-fns';
 
+export function addDays(date, days) {
+    const copy = new Date(Number(date));
+    copy.setDate(date.getDate() + days);
+    return copy;
+}
+
 export function humanReadableDate(date: Date | string) {
     const comp = new Date(date);
     const today = new Date();
@@ -13,6 +19,12 @@ export function humanReadableDate(date: Date | string) {
     }
     if (days === -1) {
         return "gestern";
+    }
+    if (days === 2) {
+        return "übermorgen";
+    }
+    if (days === -2) {
+        return "vorgestern";
     }
     const weekday = Intl.DateTimeFormat("de-DE", { weekday: 'long' }).format(comp);
 
