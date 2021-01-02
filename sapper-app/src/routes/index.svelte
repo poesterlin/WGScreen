@@ -32,7 +32,6 @@
   async function requestWakeLock() {
     try {
       wakeLock = await window.navigator.wakeLock.request("screen");
-
       wakeLock.addEventListener("release", () => {
         console.log("can go sleep");
       });
@@ -95,7 +94,7 @@
   <title>Infoscreen</title>
 </svelte:head>
 
-<!-- <span on:click={() => requestWakeLock()}>lock screen on</span> -->
+<!-- <button on:click={() => requestWakeLock()}>lock screen on</button> -->
 
 <div id="container">
   <div>

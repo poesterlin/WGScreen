@@ -1,7 +1,9 @@
 <script>
   import axios from "axios";
-  import { server } from "../helpers/env";
+  import { server, makeAuth } from "../helpers/env";
   import { onMount } from "svelte";
+  import { stores } from "@sapper/app";
+  const { session } = stores();
   let data = [];
   let newEntry;
   let newNumber;
@@ -17,19 +19,26 @@
     if (!skip) {
       for (const item of toUpdate) {
         item.update = undefined;
-        await axios.put(server + "shopings/" + item.id, {
-          ...item,
-          done: true
-        });
+        await axios.put(
+          server + "shopings/" + item.id,
+          {
+            ...item,
+            done: true
+          },
+          makeAuth($session)
+        );
       }
     }
-    shopingItemsReq = axios.get(server + "shopings?done=false");
+    shopingItemsReq = axios.get(
+      server + "shopings?done=false",
+      makeAuth($session)
+    );
     data = (await shopingItemsReq).data;
   }
 
   async function create() {
     const item = { name: newEntry, number: newNumber + "", done: false };
-    await axios.post(server + "shopings", item);
+    await axios.post(server + "shopings", item, makeAuth($session));
     await update(true);
     newEntry = undefined;
     newNumber = undefined;

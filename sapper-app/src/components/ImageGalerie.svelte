@@ -6,13 +6,15 @@
   export let images = [];
   export let onSelect = id => goto("/events/" + id);
   export let noControls = false;
-
   let current = 0;
   let interval;
 
+  if (noControls) {
+    makeInterval();
+  }
+
   function point(op) {
     current = mod(current + op, images.length);
-    makeInterval();
   }
 
   function makeInterval() {

@@ -2,10 +2,10 @@
   import axios from "axios";
   import marked from "marked";
   import { humanReadableDate } from "../helpers/date";
-  import { server } from "../helpers/env";
+  import { server, makeAuth } from "../helpers/env";
 
-  export async function preload() {
-    const events = await axios.get(server + "events");
+  export async function preload(_, session) {
+    const events = await axios.get(server + "events", makeAuth(session));
     const images = events.data
       .filter(e => e.image)
       .map(e => ({ img: e.image, id: e.id }));
