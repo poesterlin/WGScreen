@@ -1,4 +1,4 @@
-import { isAfter, isSameDay, differenceInCalendarISOWeeks, getDate, differenceInCalendarDays } from 'date-fns';
+import { isAfter, isSameDay, differenceInCalendarISOWeeks, differenceInYears, differenceInCalendarDays, isBefore } from 'date-fns';
 
 export function addDays(date, days) {
     const copy = new Date(Number(date));
@@ -79,4 +79,23 @@ export function humanReadableDate(date: Date | string) {
 
 export function isOnDate(d1: Date | string, d2: Date | string): boolean {
     return isSameDay(new Date(d1), new Date(d2));
+}
+
+export function daysDifference(day1, day2) {
+    return Math.ceil((day1 - day2) / (1000 * 60 * 60 * 24));
+}
+
+export function getDayThisYear(birthDate, year = new Date().getFullYear()) {
+    birthDate = new Date(birthDate);
+    return new Date(year, birthDate.getMonth(), birthDate.getDate());
+}
+
+
+export function getAge(birthDate: Date) {
+    const year = new Date().getFullYear();
+    const dayDate = addDays(getDayThisYear(birthDate), 1);
+    if (isBefore(dayDate, new Date())) {
+        dayDate.setFullYear(year + 1);
+    }
+    return differenceInYears(dayDate, birthDate);
 }

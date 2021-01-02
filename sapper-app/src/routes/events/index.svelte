@@ -1,18 +1,39 @@
 <script context="module">
   import axios from "axios";
   import marked from "marked";
-  import { humanReadableDate } from "../../helpers/date";
+  import {
+    humanReadableDate,
+    getAge,
+    daysDifference,
+    getDayThisYear,
+  } from "../../helpers/date";
   import { server, makeAuth } from "../../helpers/env";
   import { slide } from "svelte/transition";
 
   export async function preload(_, session) {
     const res = await axios.get(server + "events/upcoming", makeAuth(session));
-    const events = res.data.map(event => {
+    const events = res.data.map((event) => {
       event.description = marked(event.description || "");
       event.date = humanReadableDate(event.date);
       return event;
     });
 
+    const guests = (await axios.get(server + "guests", makeAuth(session))).data;
+    const today = new Date();
+    const selected = guests.filter((g) => {
+      const dif = daysDifference(getDayThisYear(new Date(g.birthday)), today);
+      return dif < 30 && dif > -1;
+    });
+    events.push(
+      ...selected.map((g) => ({
+        participants: [g],
+        date: humanReadableDate(getDayThisYear(new Date(g.birthday))),
+        id: g.id + 100000,
+        description: "",
+        title: `${g.name} hat Geburtstag (${getAge(new Date(g.birthday))})`,
+        isBirthday: true,
+      }))
+    );
     return { events };
   }
 </script>
@@ -22,7 +43,7 @@
   export let events = [];
 
   function remove({ detail }) {
-    events = events.filter(e => e.id !== detail.id);
+    events = events.filter((e) => e.id !== detail.id);
   }
 </script>
 
@@ -57,8 +78,8 @@
 
 <a href="new/event">+ Hinzufügen</a>
 
-{#each events as event}
+{#each events as event (event.id)}
   <div class="event" transition:slide>
-    <Event data={event} on:delete={e => remove(e)} />
+    <Event data={event} on:delete={(e) => remove(e)} />
   </div>
 {/each}

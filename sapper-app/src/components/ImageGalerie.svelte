@@ -28,6 +28,7 @@
     display: flex;
     position: relative;
     width: 100%;
+    height: 100%;
     overflow: hidden;
     justify-content: center;
     align-items: center;
@@ -54,7 +55,7 @@
 
 <div id="container">
   <Image
-    on:select={() => onSelect(images[current].id)}
+    onSelect={() => onSelect(images[current].id)}
     image={images[current].img}
     size="medium"
     cover />

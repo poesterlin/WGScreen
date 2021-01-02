@@ -1,6 +1,6 @@
 <script context="module">
   import axios from "axios";
-  import { isOnDate } from "../../../helpers/date";
+  import { isOnDate, getDayThisYear } from "../../../helpers/date";
   import { server, makeAuth } from "../../../helpers/env";
   import { mod } from "../../../helpers/math";
 
@@ -17,22 +17,28 @@
     const res = await axios.get(server + "events", makeAuth(session));
     const events = res.data;
 
+    const guests = (await axios.get(server + "guests", makeAuth(session))).data;
+
     const days = new Array(nrDays)
       .fill(undefined)
       .map((_, day) => new Date(year, month - 1, day + 1))
-      .map((d, i) => ({
-        date: i + 1,
-        events: events.filter(e => isOnDate(e.date, d))
-      }));
+      .map((d, i) => {
+        return {
+          date: i + 1,
+          events: events.filter((e) => isOnDate(e.date, d)),
+          birthdays: guests.filter((g) =>
+            isOnDate(getDayThisYear(g.birthday, year), d)
+          ),
+        };
+      });
 
     const firstDay = new Date(year, month - 1, 1).getDay();
-
     if (res.status === 200) {
       return {
         days,
         month,
         year,
-        offset: mod(firstDay - 1, 7)
+        offset: mod(firstDay - 1, 7),
       };
     } else {
       this.error(res.status, data.message);
@@ -41,6 +47,9 @@
 </script>
 
 <script>
+  import { goto } from "@sapper/app";
+  import Image from "../../../components/Image.svelte";
+
   export let offset;
   export let days;
   export let month;
@@ -60,7 +69,7 @@
     "Donnerstag",
     "Freitag",
     "Samstag",
-    "Sonntag"
+    "Sonntag",
   ];
 </script>
 
@@ -113,6 +122,7 @@
     text-decoration: underline;
   }
   #day {
+    position: relative;
     display: block;
     height: 100px;
     border: 1px solid #949494;
@@ -144,22 +154,24 @@
   span {
     color: #ff5e2a;
   }
+  .imageList {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    right: 0px;
+    border-radius: 40px;
+    overflow: hidden;
+    height: min-content;
+  }
 </style>
 
 <h1 class="space-between">
   Kalender
-  <div>
-    <span>{fixedMonth}</span>
-    {year}
-  </div>
+  <div><span>{fixedMonth}</span> {year}</div>
 </h1>
 <div id="nav" class="space-between">
-  <a rel="prefetch" href={prev} sapper:noscroll>
-    <button>&lt;</button>
-  </a>
-  <a rel="prefetch" href={next} sapper:noscroll>
-    <button>&gt;</button>
-  </a>
+  <a rel="prefetch" href={prev} sapper:noscroll> <button>&lt;</button> </a>
+  <a rel="prefetch" href={next} sapper:noscroll> <button>&gt;</button> </a>
 </div>
 <div id="calender">
   {#each daysOfWeek as day}
@@ -170,10 +182,18 @@
   {/each}
   {#each days as day}
     <div id="day">
+      <div class="imageList">
+        {#each day.birthdays as e}
+          <Image
+            image={e.picture}
+            onSelect={async (id) => await goto('/guests/' + e.id)}
+            size="thumbnail"
+            overwriteDimensions={40}
+            cover />
+        {/each}
+      </div>
       <b>{day.date}</b>
-      {#each day.events as e}
-        <a href="events/{e.id}">{e.title}</a>
-      {/each}
+      {#each day.events as e}<a href="events/{e.id}">{e.title}</a>{/each}
     </div>
   {/each}
 </div>

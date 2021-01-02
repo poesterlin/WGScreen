@@ -12,8 +12,16 @@
   export let showDesc = true;
   export let showOptions = true;
 
-  let options;
+  const isBirthday = data.isBirthday;
+  const linkTo = isBirthday
+    ? "guests/" + data.participants[0].id
+    : "events/" + data.id;
   const dispatch = createEventDispatcher();
+
+  if (isBirthday) {
+    data.image = data.participants[0].picture;
+    data.participants = [];
+  }
 
   async function deleteEvent() {
     await axios.delete(server + "events/" + data.id, makeAuth($session));
@@ -67,7 +75,7 @@
 </style>
 
 <div class="element">
-  <a rel="prefetch" href="events/{data.id}">
+  <a rel="prefetch" href={linkTo}>
     <h3>{data.title}</h3>
     <div>
       <Image image={data.image} />
@@ -90,7 +98,7 @@
     </div>
   {/if}
   <div id="date">{data.date}</div>
-  {#if showOptions}
+  {#if showOptions && !isBirthday}
     <div id="options">
       <Options>
         <button on:click={() => console.log('edit')}>Edit</button>

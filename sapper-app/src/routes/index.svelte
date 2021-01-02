@@ -5,17 +5,18 @@
   import { server, makeAuth } from "../helpers/env";
 
   export async function preload(_, session) {
-    const event = (await axios.get(
-      server + "events/upcoming?_limit=1",
-      makeAuth(session)
-    )).data[0];
-    event.description = marked(event.description || "");
-    event.date = humanReadableDate(event.date);
+    const event = (
+      await axios.get(server + "events/upcoming?_limit=1", makeAuth(session))
+    ).data[0];
+    if (event) {
+      event.description = marked(event.description || "");
+      event.date = humanReadableDate(event.date);
+    }
 
     const events = await axios.get(server + "events", makeAuth(session));
     const images = events.data
-      .filter(e => e.image)
-      .map(e => ({ img: e.image, id: e.id }));
+      .filter((e) => e.image)
+      .map((e) => ({ img: e.image, id: e.id }));
 
     return { nextEvent: event, images };
   }
@@ -27,18 +28,6 @@
   import ShopingCart from "../components/ShopingCart.svelte";
   export let nextEvent;
   export let images;
-  let wakeLock;
-
-  async function requestWakeLock() {
-    try {
-      wakeLock = await window.navigator.wakeLock.request("screen");
-      wakeLock.addEventListener("release", () => {
-        console.log("can go sleep");
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }
 </script>
 
 <style>
@@ -46,6 +35,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    max-height: 40vh;
   }
 
   #container > div:nth-child(2n) > a {
@@ -59,6 +49,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 10px;
+    height: 40vh
   }
 
   button {
@@ -94,25 +85,23 @@
   <title>Infoscreen</title>
 </svelte:head>
 
-<!-- <button on:click={() => requestWakeLock()}>lock screen on</button> -->
-
 <div id="container">
   <div>
     <h4>Nächstes Event</h4>
     <div class="content">
-      <Event
-        on:delete={() => document.location.reload()}
-        data={nextEvent}
-        showDesc={false}
-        showOptions={false} />
+      {#if nextEvent}
+        <Event
+          on:delete={() => document.location.reload()}
+          data={nextEvent}
+          showDesc={false}
+          showOptions={false} />
+      {:else}<span>keine Events</span>{/if}
     </div>
   </div>
 
   <div>
     <h4>Event erstellen</h4>
-    <a href="/new/event" class="content">
-      <button>+</button>
-    </a>
+    <a href="/new/event" class="content"> <button>+</button> </a>
   </div>
 
   <div>
@@ -126,5 +115,4 @@
     <h4>Galerie</h4>
     <ImageGalerie {images} />
   </div>
-
 </div>

@@ -20,5 +20,5 @@
 
 <div>
   <span>{data.name}</span>
-  <Image round image={data.picture} cover />
+  <Image image={data.picture} cover round />
 </div>

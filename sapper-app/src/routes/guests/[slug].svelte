@@ -30,6 +30,6 @@
 
 <h1>{guest.name}</h1>
 
-<Image image={guest.picture} size="large" round />
+<Image image={guest.picture} size="large" round cover />
 Birthday:
 {guest.birthday}
