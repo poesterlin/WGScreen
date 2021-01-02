@@ -7,13 +7,15 @@
     "build": "sapper build",
     "export": "sapper export",
     "start": "cross-env NODE_ICU_DATA=node_modules/full-icu node __sapper__/build",
-    "validate": "svelte-check --ignore src/node_modules/@sapper"
+    "validate": "svelte-check --ignore src/node_modules/@sapper",
+    "server": "pm2 start __sapper__/build --name sapper"
   },
   "dependencies": {
     "axios": "^0.21.0",
     "compression": "^1.7.1",
     "cookie": "^0.4.1",
     "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",
@@ -31,7 +33,7 @@
     "@types/node": "^14.11.1",
     "@types/polka": "^0.5.1",
     "file-loader": "^6.0.0",
-    "sapper": "^0.28.0",
+    "sapper": "^0.28.10",
     "svelte": "^3.17.3",
     "svelte-calendar": "^2.0.4",
     "svelte-check": "^1.0.46",

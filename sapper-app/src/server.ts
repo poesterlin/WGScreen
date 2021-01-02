@@ -3,7 +3,7 @@ import polka from 'polka';
 import compression from 'compression';
 import * as sapper from '@sapper/server';
 import Axios from 'axios';
-import { pin, pw, server, user } from './helpers/env';
+import { pin, pw, server, user, base } from './helpers/env';
 import cookieParser from 'cookie-parser';
 import { guard } from '@beyonk/sapper-rbac';
 import routes from "./routes"
@@ -11,9 +11,10 @@ import { readFileSync } from 'fs';
 import { createServer } from 'https';
 import http from 'http';
 import * as cookie from "cookie";
+// import cors from "cors";
 
 let { PORT, NODE_ENV } = process.env;
-const dev = NODE_ENV === 'development';
+const dev = true || NODE_ENV === 'development';
 dev && console.log("dev mode")
 
 if (!dev) {
@@ -55,7 +56,7 @@ function start(user, token) {
 				sameSite: true,
 				secure: !dev,
 				path: "/",
-				domain: dev ? "localhost" : "change me",
+				domain: base,
 				maxAge: 60 * 60 * 24 * 7 // 1 week
 			}));
 
@@ -71,7 +72,7 @@ function start(user, token) {
 			cookieParser(),
 			(req, res) => {
 				const cookie = req.cookies['pin'];
-				const authenticated = dev || cookie ? cookie === pin : false;
+				const authenticated = cookie ? cookie === pin : false;
 
 				const scope = { scope: ['screen'] };
 

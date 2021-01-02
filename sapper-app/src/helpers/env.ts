@@ -1,4 +1,5 @@
-export const server = "http://localhost:1337/";
+export const base = "localhost"
+export const server = "http://" + base + ":1337/";
 export const pw = "EMs2UMRq8S4hsfn";
 export const user = "wgscreen@test.com";
 export const pin = "1234";
