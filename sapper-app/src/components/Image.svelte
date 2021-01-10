@@ -6,8 +6,20 @@
   export let cover = false;
   export let overwriteDimensions = false;
   export let onSelect = () => {};
+  let choosenSize;
 
-  $: sized = imageObj && imageObj.image ? imageObj.image.formats[size] : undefined;
+  $: {
+    if (imageObj && imageObj.image && !imageObj.image.formats[size]) {
+      choosenSize = Object.keys(imageObj.image.formats)[0];
+    } else {
+      choosenSize = size;
+    }
+  }
+
+  $: sized =
+    imageObj && imageObj.image
+      ? imageObj.image.formats[choosenSize]
+      : undefined;
   $: host = server.slice(0, -1);
 </script>
 

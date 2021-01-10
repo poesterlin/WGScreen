@@ -4,6 +4,7 @@
   import { mod } from "../helpers/math";
 
   export let images = [];
+
   export let noControls = images.length <= 1;
   export let size = "medium";
 
