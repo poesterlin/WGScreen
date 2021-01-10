@@ -20,19 +20,11 @@
     "description": {
       "type": "richtext"
     },
-    "image": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos"
-      ],
-      "plugin": "upload",
-      "required": false
-    },
     "participants": {
       "collection": "guest"
+    },
+    "images": {
+      "collection": "images"
     }
   }
 }

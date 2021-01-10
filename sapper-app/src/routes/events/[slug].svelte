@@ -22,7 +22,7 @@
 </script>
 
 <script>
-  import Image from "../../components/Image.svelte";
+  import ImageGalerie from "../../components/ImageGalerie.svelte";
   import Guest from "../../components/Guest.svelte";
 
   export let event;
@@ -71,7 +71,9 @@
       {@html event.description}
     </div>
     {event.date}
-    <Image image={event.image} size="large" />
+    <div>
+      <ImageGalerie images={event.images} size="large" />
+    </div>
   </div>
 
   <div id="guestList">

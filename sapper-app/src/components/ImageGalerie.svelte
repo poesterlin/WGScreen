@@ -4,8 +4,9 @@
   import { mod } from "../helpers/math";
 
   export let images = [];
-  export let onSelect = id => goto("/events/" + id);
-  export let noControls = false;
+  export let noControls = images.length <= 1;
+  export let size = "medium";
+
   let current = 0;
   let interval;
 
@@ -55,9 +56,8 @@
 
 <div id="container">
   <Image
-    onSelect={() => onSelect(images[current].id)}
-    image={images[current].img}
-    size="medium"
+    imageObj={images[current]}
+    {size}
     cover />
   {#if !noControls}
     <div id="spacer">

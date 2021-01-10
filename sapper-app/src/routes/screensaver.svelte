@@ -5,12 +5,8 @@
   import { server, makeAuth } from "../helpers/env";
 
   export async function preload(_, session) {
-    const events = await axios.get(server + "events", makeAuth(session));
-    const images = events.data
-      .filter(e => e.image)
-      .map(e => ({ img: e.image, id: e.id }));
-
-    return { images };
+    const events = await axios.get(server + "images", makeAuth(session));
+    return { images: events.data };
   }
 </script>
 

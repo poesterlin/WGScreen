@@ -1,13 +1,13 @@
 <script lang="ts">
   import { server } from "../helpers/env";
-  export let image;
+  export let imageObj;
   export let size = "thumbnail";
   export let round = false;
   export let cover = false;
   export let overwriteDimensions = false;
   export let onSelect = () => {};
 
-  $: sized = image ? image.formats[size] : undefined;
+  $: sized = imageObj && imageObj.image ? imageObj.image.formats[size] : undefined;
   $: host = server.slice(0, -1);
 </script>
 
@@ -32,7 +32,7 @@
   }
 </style>
 
-{#if image}
+{#if sized}
   <img
     on:click={() => onSelect()}
     width={overwriteDimensions || sized.width}
@@ -41,5 +41,5 @@
     class:cover
     src={host + sized.url}
     loading="lazy"
-    alt={image.alternativeText} />
+    alt={imageObj.image.alternativeText} />
 {/if}

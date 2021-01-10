@@ -78,7 +78,7 @@
   <a rel="prefetch" href={linkTo}>
     <h3>{data.title}</h3>
     <div>
-      <Image image={data.image} />
+      <Image imageObj={data.images[0]} />
     </div>
     {#if showDesc}
       <div class="desc">
