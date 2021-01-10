@@ -29,7 +29,9 @@
   }
 </style>
 
-<Nav {segment} />
+{#if segment !== "upload"}
+  <Nav {segment} />
+{/if}
 
 <main>
   <slot />

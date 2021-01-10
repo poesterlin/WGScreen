@@ -5,7 +5,7 @@
   import Guest from "./Guest.svelte";
   import axios from "axios";
   import { server, makeAuth } from "../helpers/env";
-  import { stores } from "@sapper/app";
+  import { stores, goto } from "@sapper/app";
   const { session } = stores();
 
   export let data;
@@ -101,7 +101,7 @@
   {#if showOptions && !isBirthday}
     <div id="options">
       <Options>
-        <button on:click={() => console.log('edit')}>Edit</button>
+        <button on:click={async () => await goto('/events/' + data.id + "/edit")}>Edit</button>
         <button on:click={() => deleteEvent()}>Delete</button>
       </Options>
     </div>
