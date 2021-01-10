@@ -13,8 +13,8 @@
 
   function makeTimeout() {
     routeTimeout = setTimeout(() => {
-	  goToScreenSaver();
-	  routeTimeout = undefined;
+      goToScreenSaver();
+      routeTimeout = undefined;
     }, 1000 * 180);
   }
 
@@ -108,6 +108,14 @@
         aria-current={segment === 'guests' ? 'page' : undefined}
         href="guests">
         Gäste
+      </a>
+    </li>
+    <li>
+      <a
+        rel="prefetch"
+        aria-current={segment === 'uploadLink' ? 'page' : undefined}
+        href="uploadLink">
+        Upload
       </a>
     </li>
   </ul>
