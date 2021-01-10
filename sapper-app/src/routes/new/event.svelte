@@ -112,9 +112,8 @@
   ];
 </script>
 
-<style>
-  @import "https://cdn.quilljs.com/1.3.6/quill.snow.css";
-
+<style global>
+  @import "quill/dist/quill.snow.css";
   input#title {
     display: inline-block;
     width: calc(100% - 18px);
