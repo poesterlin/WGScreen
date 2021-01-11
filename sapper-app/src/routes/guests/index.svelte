@@ -42,13 +42,24 @@
     width: 50vw;
     margin: auto;
   }
+
+  .guest:hover {
+    background: rgb(206, 206, 206);
+  }
+
+  .guest {
+    margin: 12px 0px;
+    display: block;
+    padding: 5px;
+    border-radius: 5px;
+  }
 </style>
 
 <a href="new/guest" class="button">+ Hinzufügen</a>
 
 <div>
   {#each guests as guest}
-    <a rel="prefetch" href="guests/{guest.id}">
+    <a rel="prefetch" class="guest" href="guests/{guest.id}">
       <Guest data={guest} />
     </a>
   {/each}

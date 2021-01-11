@@ -30,7 +30,7 @@
       makeAuth($session)
     );
 
-    await goto("/guests")
+    await goto("/guests");
   }
 </script>
 
@@ -53,8 +53,26 @@
     margin: auto;
     min-height: 60px;
   }
+  h3 {
+    margin-top: 15px;
+  }
+  #send:not([disabled]) {
+    box-shadow: 2px 3px #ff5e2a;
+    color: #616161 !important;
+  }
+  #send {
+    display: block;
+    margin-top: 15px;
+    float: right;
+    background: white;
+    border: 1px solid gray;
+    font-size: 24px;
+    color: #323232;
+    cursor: pointer;
+  }
 </style>
 
+<h2>Neuer Gast:</h2>
 <h3>Name:</h3>
 <input bind:value={name} placeholder="Name" type="text" />
 <h3>Geburtstag:</h3>
@@ -63,7 +81,7 @@
   <input bind:value={month} placeholder="Monat" type="text" />
   <input bind:value={year} placeholder="Jahr" type="text" />
 </div>
-Bild auswählen
+<h3>Bild auswählen</h3>
 <div class="list">
   {#each images as image}
     <div class:selected={image.id === imageId}>
@@ -71,4 +89,6 @@ Bild auswählen
     </div>
   {/each}
 </div>
-<button on:click={() => send()}>Speichern</button>
+<button id="send" disabled={!name || !date || !imageId} on:click={() => send()}>
+  Speichern
+</button>
