@@ -24,16 +24,18 @@
       const dif = daysDifference(getDayThisYear(new Date(g.birthday)), today);
       return dif < 30 && dif > -1;
     });
-    events.push(
-      ...selected.map(g => ({
-        participants: [g],
+
+    selected.forEach(g => {
+      const birthdayEvent = {
+        participants: [JSON.parse(JSON.stringify(g))],
         date: getDayThisYear(new Date(g.birthday)),
         id: g.id + 100000,
         description: "",
         title: `${g.name} hat Geburtstag (${getAge(new Date(g.birthday))})`,
         isBirthday: true
-      }))
-    );
+      };
+      events.push(birthdayEvent);
+    });
 
     events = events.sort(sort);
     events.forEach(e => (e.date = humanReadableDate(e.date)));

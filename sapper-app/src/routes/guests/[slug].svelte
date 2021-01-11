@@ -31,5 +31,4 @@
 <h1>{guest.name}</h1>
 
 <Image imageObj={guest.image} size="large" round cover />
-Birthday:
-{guest.birthday}
+Geburtstag: {guest.birthday}

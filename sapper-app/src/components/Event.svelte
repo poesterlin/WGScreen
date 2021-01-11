@@ -12,15 +12,15 @@
   export let showDesc = true;
   export let showOptions = true;
 
+  const dispatch = createEventDispatcher();
+
   const isBirthday = data.isBirthday && data.participants.length === 1;
   const linkTo = isBirthday
     ? "guests/" + data.participants[0].id
     : "events/" + data.id;
-  const dispatch = createEventDispatcher();
 
   if (isBirthday) {
     data.images = [data.participants[0].image];
-    data.participants = [];
   }
 
   async function deleteEvent() {
@@ -86,7 +86,7 @@
       </div>
     {/if}
   </a>
-  {#if data.participants.length > 0}
+  {#if data.participants.length > 0 && !isBirthday}
     <div id="guestList">
       {#each data.participants as guest}
         <div class="guest">
@@ -103,9 +103,9 @@
       <Options>
         <button
           on:click={async () => await goto('/events/' + data.id + '/edit')}>
-          Edit
+          Bearbeiten
         </button>
-        <button on:click={() => deleteEvent()}>Delete</button>
+        <button on:click={() => deleteEvent()}>Löschen</button>
       </Options>
     </div>
   {/if}
