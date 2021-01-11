@@ -30,6 +30,6 @@
 
 <h1>{guest.name}</h1>
 
-<Image imageObj={{image: guest.picture}} size="large" round cover />
+<Image imageObj={guest.image} size="large" round cover />
 Birthday:
 {guest.birthday}

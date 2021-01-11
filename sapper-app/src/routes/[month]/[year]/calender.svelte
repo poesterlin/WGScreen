@@ -185,7 +185,7 @@
       <div class="imageList">
         {#each day.birthdays as e}
           <Image
-            image={e.picture}
+            image={e.image}
             onSelect={async (id) => await goto('/guests/' + e.id)}
             size="thumbnail"
             overwriteDimensions={40}

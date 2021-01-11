@@ -19,7 +19,7 @@
   const dispatch = createEventDispatcher();
 
   if (isBirthday) {
-    data.image = data.participants[0].picture;
+    data.image = data.participants[0].image;
     data.participants = [];
   }
 
