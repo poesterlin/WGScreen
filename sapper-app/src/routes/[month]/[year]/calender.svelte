@@ -25,10 +25,11 @@
       .map((d, i) => {
         return {
           date: i + 1,
-          events: events.filter((e) => isOnDate(e.date, d)),
-          birthdays: guests.filter((g) =>
+          events: events.filter(e => isOnDate(e.date, d)),
+          birthdays: guests.filter(g =>
             isOnDate(getDayThisYear(g.birthday, year), d)
           ),
+          today: isOnDate(d, new Date())
         };
       });
 
@@ -163,6 +164,11 @@
     overflow: hidden;
     height: min-content;
   }
+  #day.today {
+    border: 2px solid #ff5e2a;
+    box-shadow: 1px 2px #797979;
+    box-sizing: border-box;
+  }
 </style>
 
 <h1 class="space-between">
@@ -188,7 +194,7 @@
     <div class="grey" />
   {/each}
   {#each days as day}
-    <div id="day">
+    <div id="day" class:today={day.today}>
       <div class="imageList">
         {#each day.birthdays as e}
           <Image
