@@ -12,7 +12,7 @@
   export let showDesc = true;
   export let showOptions = true;
 
-  const isBirthday = data.isBirthday;
+  const isBirthday = data.isBirthday && data.participants.length === 1;
   const linkTo = isBirthday
     ? "guests/" + data.participants[0].id
     : "events/" + data.id;
