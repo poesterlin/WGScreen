@@ -38,7 +38,7 @@
         days,
         month,
         year,
-        offset: mod(firstDay - 1, 7),
+        offset: mod(firstDay - 1, 7)
       };
     } else {
       this.error(res.status, data.message);
@@ -69,7 +69,7 @@
     "Donnerstag",
     "Freitag",
     "Samstag",
-    "Sonntag",
+    "Sonntag"
   ];
 </script>
 
@@ -167,11 +167,18 @@
 
 <h1 class="space-between">
   Kalender
-  <div><span>{fixedMonth}</span> {year}</div>
+  <div>
+    <span>{fixedMonth}</span>
+    {year}
+  </div>
 </h1>
 <div id="nav" class="space-between">
-  <a rel="prefetch" href={prev} sapper:noscroll> <button>&lt;</button> </a>
-  <a rel="prefetch" href={next} sapper:noscroll> <button>&gt;</button> </a>
+  <a rel="prefetch" href={prev} sapper:noscroll>
+    <button>&lt;</button>
+  </a>
+  <a rel="prefetch" href={next} sapper:noscroll>
+    <button>&gt;</button>
+  </a>
 </div>
 <div id="calender">
   {#each daysOfWeek as day}
@@ -185,15 +192,17 @@
       <div class="imageList">
         {#each day.birthdays as e}
           <Image
-            image={e.image}
-            onSelect={async (id) => await goto('/guests/' + e.id)}
+            imageObj={e.image}
+            onSelect={async id => await goto('/guests/' + e.id)}
             size="thumbnail"
             overwriteDimensions={40}
             cover />
         {/each}
       </div>
       <b>{day.date}</b>
-      {#each day.events as e}<a href="events/{e.id}">{e.title}</a>{/each}
+      {#each day.events as e}
+        <a href="events/{e.id}">{e.title}</a>
+      {/each}
     </div>
   {/each}
 </div>

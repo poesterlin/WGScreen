@@ -19,7 +19,7 @@
   const dispatch = createEventDispatcher();
 
   if (isBirthday) {
-    data.image = data.participants[0].image;
+    data.images = [data.participants[0].image];
     data.participants = [];
   }
 
@@ -101,7 +101,10 @@
   {#if showOptions && !isBirthday}
     <div id="options">
       <Options>
-        <button on:click={async () => await goto('/events/' + data.id + "/edit")}>Edit</button>
+        <button
+          on:click={async () => await goto('/events/' + data.id + '/edit')}>
+          Edit
+        </button>
         <button on:click={() => deleteEvent()}>Delete</button>
       </Options>
     </div>
