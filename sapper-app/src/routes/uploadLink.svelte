@@ -1,6 +1,6 @@
 <script>
   import QRCode from "../components/QrCode.svelte";
-  import { base } from "../helpers/env";
+  import { base, port } from "../helpers/env";
 </script>
 
 <style>
@@ -15,5 +15,7 @@
 </style>
 
 <div>
-  <QRCode codeValue={'http://' + base + ':30001/upload'} squareSize="400" />
+  <QRCode
+    codeValue={'http://' + base + ':' + port + '/upload'}
+    squareSize="400" />
 </div>

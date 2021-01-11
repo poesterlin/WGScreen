@@ -3,7 +3,7 @@ import polka from 'polka';
 import compression from 'compression';
 import * as sapper from '@sapper/server';
 import Axios from 'axios';
-import { pin, pw, server, user, base } from './helpers/env';
+import { pin, pw, server, user, base, port } from './helpers/env';
 import cookieParser from 'cookie-parser';
 import { guard } from '@beyonk/sapper-rbac';
 import routes from "./routes"
@@ -11,15 +11,10 @@ import { readFileSync } from 'fs';
 import { createServer } from 'https';
 import http from 'http';
 import * as cookie from "cookie";
-// import cors from "cors";
 
-let { PORT, NODE_ENV } = process.env;
+let { NODE_ENV } = process.env;
 const dev = true || NODE_ENV === 'development';
 dev && console.log("dev mode")
-
-if (!dev) {
-	PORT = "443";
-}
 
 let options: any = {};
 
@@ -100,8 +95,8 @@ function start(user, token) {
 		create = http.createServer;
 	}
 
-	create(options, handler).listen(PORT, () => {
-		console.log(`> Running on port ${PORT}`);
+	create(options, handler).listen(port, () => {
+		console.log(`> Running on port ${port}`);
 	});
 }
 
