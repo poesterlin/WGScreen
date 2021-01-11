@@ -1,4 +1,4 @@
-import { isAfter, isSameDay, differenceInCalendarISOWeeks, differenceInYears, differenceInCalendarDays, isBefore } from 'date-fns';
+import { isAfter, isSameDay, differenceInCalendarISOWeeks, differenceInYears, differenceInCalendarDays, isBefore, compareAsc } from 'date-fns';
 
 export function addDays(date, days) {
     const copy = new Date(Number(date));
@@ -79,6 +79,10 @@ export function humanReadableDate(date: Date | string) {
 
 export function isOnDate(d1: Date | string, d2: Date | string): boolean {
     return isSameDay(new Date(d1), new Date(d2));
+}
+
+export function sort(d1: any, d2: any) {
+    return compareAsc(new Date(d1.date), new Date(d2.date));
 }
 
 export function daysDifference(day1, day2) {
