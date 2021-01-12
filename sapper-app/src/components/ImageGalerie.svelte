@@ -56,10 +56,7 @@
 </style>
 
 <div id="container">
-  <Image
-    imageObj={images[current]}
-    {size}
-    cover />
+  <Image imageObj={images[current]} {size} />
   {#if !noControls}
     <div id="spacer">
       <button on:click={() => point(-1)}>&lt;</button>
