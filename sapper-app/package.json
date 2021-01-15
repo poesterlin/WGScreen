@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "axios": "^0.21.0",
+    "blueimp-canvas-to-blob": "^3.28.0",
+    "blueimp-load-image": "^5.14.0",
     "compression": "^1.7.1",
     "cookie": "^0.4.1",
     "cookie-parser": "^1.4.5",

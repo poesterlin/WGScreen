@@ -18,4 +18,10 @@
   <QRCode
     codeValue={'http://' + base + ':' + port + '/upload'}
     squareSize="400" />
+  <br />
+  <br />
+  <span>oder:</span>
+  <br />
+  <br />
+  <a href={'http://' + base + ':' + port + '/upload'}>Direkter Upload</a>
 </div>

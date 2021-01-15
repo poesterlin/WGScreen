@@ -1,63 +1,86 @@
-<script context="module">
-  //   import { stores } from "@sapper/app";
-
-  export async function preload(_, session) {
-    // const event = (await axios.get(
-    //   server + "events/upcoming?_limit=1",
-    //   makeAuth(session)
-    // )).data[0];
-
-    return {};
-  }
-</script>
-
 <script lang="ts">
   import axios from "axios";
-  import { onMount } from "svelte";
-  import { server, makeAuth } from "../helpers/env";
+  import { server } from "../helpers/env";
+  import Image from "../components/Image.svelte";
 
-  let FileUpload;
+  let fileinput;
+  let files = [];
 
-  onMount(async () => {
-    const { default: FilePond, registerPlugin, supported } = await import(
-      "svelte-filepond"
+  async function handleAddFile(event) {
+    for (const file of event.target.files) {
+      const data = new FormData();
+      data.append("files.image", file, file.name);
+      data.append("data", JSON.stringify({}));
+
+      const res = await axios.post(server + "images", data, {
+        headers: {
+          "Content-Type": "form-data",
+        },
+      });
+      files = [...files, { image: res.data, size: humanFileSize(file.size) }];
+    }
+  }
+
+  function humanFileSize(bytes, dp = 1) {
+    const thresh = 1000;
+
+    if (Math.abs(bytes) < thresh) {
+      return bytes + " B";
+    }
+
+    const units = ["kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+    let u = -1;
+    const r = 10 ** dp;
+
+    do {
+      bytes /= thresh;
+      ++u;
+    } while (
+      Math.round(Math.abs(bytes) * r) / r >= thresh &&
+      u < units.length - 1
     );
-    FileUpload = FilePond;
-    const { default: FilePondPluginImageExifOrientation } = await import(
-      "filepond-plugin-image-exif-orientation"
-    );
-    const { default: FilePondPluginImagePreview } = await import(
-      "filepond-plugin-image-preview"
-    );
 
-    registerPlugin(
-      FilePondPluginImageExifOrientation,
-      FilePondPluginImagePreview
-    );
-  });
-
-  let pond;
-
-  async function handleAddFile(err, fileItem) {
-    console.log(pond.getFiles(), fileItem);
-    const data = new FormData();
-    data.append("files.image", fileItem.file, fileItem.file.name);
-    data.append("data", JSON.stringify({}));
-
-    await axios.post(server + "images", data, {
-      headers: {
-        "Content-Type": "multipart/form-data"
-      }
-    });
+    return bytes.toFixed(dp) + " " + units[u];
   }
 </script>
 
-<style global>
-  @import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+<style>
+  #list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 80vw;
+    margin: auto;
+  }
+  input {
+    display: none;
+  }
+  .item {
+    display: flex;
+    flex-direction: column;
+  }
 </style>
 
-<svelte:component
-  this={FileUpload}
-  bind:this={pond}
-  allowMultiple={true}
-  onaddfile={handleAddFile} />
+<h1>Upload</h1>
+
+<img
+  src="https://static.thenounproject.com/png/625182-200.png"
+  alt="Upload"
+  on:click={() => {
+    fileinput.click();
+  }} />
+<input
+  type="file"
+  accept=".jpg, .jpeg, .png"
+  multiple
+  on:change={(e) => handleAddFile(e)}
+  bind:this={fileinput} />
+
+<div id="list">
+  {#each files as item}
+    <div class="item">
+      <Image imageObj={item.image} />
+      <span>Größe: {item.size}</span>
+    </div>
+  {:else}Lade Bilder hoch{/each}
+</div>
