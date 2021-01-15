@@ -3,12 +3,12 @@
   import marked from "marked";
   import { humanReadableDate } from "../helpers/date";
   import { server, makeAuth } from "../helpers/env";
+  import { shuffle } from "../helpers/math";
 
   export async function preload(_, session) {
-    const event = (await axios.get(
-      server + "events/upcoming?_limit=1",
-      makeAuth(session)
-    )).data[0];
+    const event = (
+      await axios.get(server + "events/upcoming?_limit=1", makeAuth(session))
+    ).data[0];
     if (event) {
       event.description = marked(event.description || "");
       event.date = humanReadableDate(event.date);
@@ -16,7 +16,10 @@
 
     const imgs = await axios.get(server + "images", makeAuth(session));
 
-    return { nextEvent: event, images: imgs.data };
+    return {
+      nextEvent: event,
+      images: shuffle(imgs.data).filter((i) => !!i.image),
+    };
   }
 </script>
 
@@ -95,17 +98,13 @@
           data={nextEvent}
           showDesc={false}
           showOptions={false} />
-      {:else}
-        <span>keine Events</span>
-      {/if}
+      {:else}<span>keine Events</span>{/if}
     </div>
   </div>
 
   <div>
     <h4>Event erstellen</h4>
-    <a href="/new/event" class="content">
-      <button>+</button>
-    </a>
+    <a href="/new/event" class="content"> <button>+</button> </a>
   </div>
 
   <div>

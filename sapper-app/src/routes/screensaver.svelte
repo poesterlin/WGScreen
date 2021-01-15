@@ -1,12 +1,13 @@
 <script context="module">
   import axios from "axios";
   import marked from "marked";
-  import { humanReadableDate } from "../helpers/date";
   import { server, makeAuth } from "../helpers/env";
+  import { shuffle } from "../helpers/math";
 
   export async function preload(_, session) {
     const events = await axios.get(server + "images", makeAuth(session));
-    return { images: events.data };
+
+    return { images: shuffle(events.data).filter((i) => !!i.image) };
   }
 </script>
 
@@ -14,23 +15,6 @@
   import ImageGalerie from "../components/ImageGalerie.svelte";
 
   export let images;
-  function action() {
-    return {
-      update: () => {
-        navigator.wakeLock.request("display").then(() => {
-          console.log("success");
-        });
-        navigator.wakeLock.request("system").then(() => {
-          console.log("success system");
-        });
-      },
-      destroy: () => {
-        try {
-          navigator.wakeLock.release("display");
-        } catch (e) {}
-      }
-    };
-  }
 </script>
 
 <style>
@@ -44,6 +28,6 @@
   }
 </style>
 
-<div use:action>
+<div>
   <ImageGalerie {images} noControls onSelect={() => window.history.back()} />
 </div>

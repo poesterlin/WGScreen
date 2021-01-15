@@ -10,7 +10,6 @@
 
 <script>
   import Image from "../../components/Image.svelte";
-  import { humanReadableDate } from "../../helpers/date";
   import { stores, goto } from "@sapper/app";
   const { session } = stores();
 

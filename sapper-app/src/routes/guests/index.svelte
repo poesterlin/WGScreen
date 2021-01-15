@@ -1,11 +1,13 @@
 <script context="module">
   import axios from "axios";
-  import marked from "marked";
   import { server, makeAuth } from "../../helpers/env";
 
   export async function preload(_, session) {
-    const res = await axios.get(server + "guests", makeAuth(session));
-    const guests = res.data;
+    const res = await axios.get(
+      server + "guests?_sort=name:asc",
+      makeAuth(session)
+    );
+    const guests = res.data.sort((a, b) => a.name.localeCompare(b.name));
     return { guests };
   }
 </script>

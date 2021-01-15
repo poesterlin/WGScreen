@@ -2,15 +2,11 @@
   import axios from "axios";
   import { server, makeAuth } from "../../helpers/env";
 
-  export async function preload({ params }, session) {
+  export async function preload(_, session) {
     const res = await axios.get(server + "guests/", makeAuth(session));
-    const guests = res.data;
+    const guests = res.data.sort((a, b) => a.name.localeCompare(b.name));
 
-    if (res.status === 200) {
-      return { guests };
-    } else {
-      this.error(res.status, data.message);
-    }
+    return { guests };
   }
 </script>
 
@@ -26,13 +22,13 @@
   export let guests = [];
   let searchGuest;
   $: filtered = searchGuest
-    ? guests.filter(g =>
+    ? guests.filter((g) =>
         g.name.toLowerCase().includes(searchGuest.toLowerCase())
       )
     : guests;
 
   let selectedIds = [];
-  $: shown = filtered.filter(g => !selectedIds.some(i => g.id === i.id));
+  $: shown = filtered.filter((g) => !selectedIds.some((i) => g.id === i.id));
   let title = "";
   let desc;
   let date = addDays(new Date(), 1);
@@ -48,18 +44,18 @@
       [{ header: 1 }, { header: 2 }, "blockquote", "link"],
       ["bold", "italic", "underline", "strike"],
       [{ list: "ordered" }],
-      ["clean"]
+      ["clean"],
     ];
     const options = {
       modules: {
-        toolbar: toolbarOptions
+        toolbar: toolbarOptions,
       },
       theme: "snow",
-      placeholder: "Beschreibung"
+      placeholder: "Beschreibung",
     };
 
     quill = new Quill(desc, options);
-    Quill.prototype.getHtml = function() {
+    Quill.prototype.getHtml = function () {
       return this.container.querySelector(".ql-editor").innerHTML;
     };
   });
@@ -70,8 +66,8 @@
       {
         title,
         description: content(),
-        participants: selectedIds.map(g => g.id),
-        date
+        participants: selectedIds.map((g) => g.id),
+        date,
       },
       makeAuth($session)
     );
@@ -79,8 +75,8 @@
   }
 
   function toggle(guest) {
-    if (selectedIds.some(g => guest.id === g.id)) {
-      selectedIds = selectedIds.filter(g => g !== guest);
+    if (selectedIds.some((g) => guest.id === g.id)) {
+      selectedIds = selectedIds.filter((g) => g !== guest);
     } else {
       selectedIds = [...selectedIds, guest];
     }
@@ -93,7 +89,7 @@
     ["Mittwoch", "Mi"],
     ["Donnerstag", "Do"],
     ["Freitag", "Fr"],
-    ["Samstag", "Sa"]
+    ["Samstag", "Sa"],
   ];
 
   const monthsOfYear = [
@@ -108,7 +104,7 @@
     ["September", "Sep"],
     ["Oktober", "Okt"],
     ["November", "Nov"],
-    ["Dezember", "Dez"]
+    ["Dezember", "Dez"],
   ];
 </script>
 
@@ -214,9 +210,7 @@
       {:else}
         {#if searchGuest}
           <span>Kein Gast gefunden...</span>
-        {:else if selectedIds.length === 0}
-          <span>Noch keine Gäste</span>
-        {/if}
+        {:else if selectedIds.length === 0}<span>Noch keine Gäste</span>{/if}
       {/each}
     </div>
   </div>
