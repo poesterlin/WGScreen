@@ -8,7 +8,7 @@
   export let noControls = images.length <= 1;
   export let size = "medium";
 
-  let current = 0;
+  let current = Math.floor(Math.random() * images.length);
   let interval;
 
   if (noControls) {

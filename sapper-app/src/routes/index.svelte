@@ -18,7 +18,7 @@
 
     return {
       nextEvent: event,
-      images: shuffle(imgs.data).filter((i) => !!i.image),
+      images: imgs.data.filter((i) => !!i.image),
     };
   }
 </script>

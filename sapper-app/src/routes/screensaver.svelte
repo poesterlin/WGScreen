@@ -5,9 +5,8 @@
   import { shuffle } from "../helpers/math";
 
   export async function preload(_, session) {
-    const events = await axios.get(server + "images", makeAuth(session));
-
-    return { images: shuffle(events.data).filter((i) => !!i.image) };
+    const imgs = await axios.get(server + "images", makeAuth(session));
+    return { images: imgs.data.filter((i) => !!i.image), };
   }
 </script>
 
