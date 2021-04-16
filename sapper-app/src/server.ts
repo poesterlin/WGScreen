@@ -11,10 +11,13 @@ import { readFileSync } from 'fs';
 import { createServer } from 'https';
 import http from 'http';
 import * as cookie from "cookie";
+import { Youtube } from './youtube';
 
 let { NODE_ENV } = process.env;
 const dev = true || NODE_ENV === 'development';
 dev && console.log("dev mode")
+
+const youtube = new Youtube();
 
 let options: any = {};
 
@@ -60,6 +63,13 @@ function start(user, token) {
 			res.setHeader('Location', req.headers.referer || '/');
 			res.end();
 			return;
+		})
+		.get('/search/:query', async (req, res) => {
+			const token = await youtube.readToken()
+			const cred = await youtube.authorize(token);
+			const results = await youtube.search(cred, req.params.query);
+
+			res.end(JSON.stringify((results as any).data.items));
 		})
 		.use(
 			compression({ threshold: 0 }),

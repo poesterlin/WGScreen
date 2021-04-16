@@ -118,5 +118,13 @@
         Upload
       </a>
     </li>
+    <li>
+      <a
+        rel="prefetch"
+        aria-current={segment === 'musik' ? 'page' : undefined}
+        href="musik">
+        Musik
+      </a>
+    </li>
   </ul>
 </nav>
