@@ -1,38 +1,52 @@
 <script lang="ts">
-  import { goto } from "@sapper/app";
+  import { onMount } from "svelte";
+
   export let segment;
 
   const month = new Date().getMonth() + 1;
   const year = new Date().getFullYear();
+  let batteryLevel = "";
 
-  let routeTimeout;
-  $: {
-    routeTimeout ? undefined : makeTimeout();
-  }
-  makeTimeout();
-
-  function makeTimeout() {
-    routeTimeout = setTimeout(() => {
-      goToScreenSaver();
-      routeTimeout = undefined;
-    }, 1000 * 180);
-  }
-
-  function interaction() {
-    clearTimeout(routeTimeout);
-    makeTimeout();
-  }
-
-  async function goToScreenSaver() {
-    await goto("/screensaver");
-  }
+  onMount(async () => {
+    if ("getBattery" in window.navigator) {
+      // @ts-ignore
+      const battery = await window.navigator.getBattery();
+      battery.addEventListener("levelchange", (b) => (batteryLevel = b.level * 100 + "%"));
+      batteryLevel = battery.level * 100 + "%";
+    }
+  });
 </script>
+
+<nav>
+  <ul>
+    <li>
+      <a aria-current={segment === undefined ? "page" : undefined} href="."> Home </a>
+    </li>
+    <li>
+      <a rel="prefetch" aria-current={segment === "events" ? "page" : undefined} href="events"> Events </a>
+    </li>
+    <li>
+      <a rel="prefetch" aria-current={parseInt(segment) + 1 ? "page" : undefined} href="{month}/{year}/calender"> Kalender </a>
+    </li>
+    <li>
+      <a rel="prefetch" aria-current={segment === "guests" ? "page" : undefined} href="guests"> Gäste </a>
+    </li>
+    <li>
+      <a rel="prefetch" aria-current={segment === "uploadLink" ? "page" : undefined} href="uploadLink"> Upload </a>
+    </li>
+    <li>
+      <a rel="prefetch" aria-current={segment === "musik" ? "page" : undefined} href="musik"> Musik </a>
+    </li>
+  </ul>
+  <span>{batteryLevel}</span>
+</nav>
 
 <style>
   nav {
     border-bottom: 1px solid rgba(255, 62, 0, 0.1);
     font-weight: 300;
     padding: 0 1em;
+    position: relative;
   }
 
   ul {
@@ -72,59 +86,11 @@
     padding: 1em 0.5em;
     display: block;
   }
-</style>
 
-<svelte:window
-  on:touchstart={() => interaction()}
-  on:touchmove={() => interaction()}
-  on:touchend={() => interaction()}
-  on:touchcancel={() => interaction()} />
-<nav>
-  <ul>
-    <li>
-      <a aria-current={segment === undefined ? 'page' : undefined} href=".">
-        Home
-      </a>
-    </li>
-    <li>
-      <a
-        rel="prefetch"
-        aria-current={segment === 'events' ? 'page' : undefined}
-        href="events">
-        Events
-      </a>
-    </li>
-    <li>
-      <a
-        rel="prefetch"
-        aria-current={parseInt(segment) + 1 ? 'page' : undefined}
-        href="{month}/{year}/calender">
-        Kalender
-      </a>
-    </li>
-    <li>
-      <a
-        rel="prefetch"
-        aria-current={segment === 'guests' ? 'page' : undefined}
-        href="guests">
-        Gäste
-      </a>
-    </li>
-    <li>
-      <a
-        rel="prefetch"
-        aria-current={segment === 'uploadLink' ? 'page' : undefined}
-        href="uploadLink">
-        Upload
-      </a>
-    </li>
-    <li>
-      <a
-        rel="prefetch"
-        aria-current={segment === 'musik' ? 'page' : undefined}
-        href="musik">
-        Musik
-      </a>
-    </li>
-  </ul>
-</nav>
+  span {
+    position: absolute;
+    right: 10px;
+    top: calc(50% - 0.9em);
+    opacity: 0.2;
+  }
+</style>
