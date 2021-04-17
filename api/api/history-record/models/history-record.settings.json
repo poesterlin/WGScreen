@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "history_records",
+  "info": {
+    "name": "historyRecord",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "artist": {
+      "type": "string"
+    },
+    "youtubeId": {
+      "type": "string"
+    },
+    "thumbnail": {
+      "type": "string"
+    }
+  }
+}
