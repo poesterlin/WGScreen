@@ -116,14 +116,9 @@
         marginheight="0"
         marginwidth="0"
         type="text/html"
-        src="https://www.youtube.com/embed/{res.youtubeId}?autoplay=1&fs=0&iv_load_policy=3&showinfo=0&rel=0&cc_load_policy=0&vq=small&origin=https://youtubeembedcode.com"
+        src="https://www.youtube.com/embed/{res.youtubeId}?autoplay=1&fs=0&iv_load_policy=3&showinfo=0&rel=0&cc_load_policy=0&vq=small"
         title={res.title}
-      >
-        <div><small><a href="https://youtubeembedcode.com/de/">https://youtubeembedcode.com/de/</a></small></div>
-        <div><small><a href="https://enablecookies.info">How to enable cookies on chrome</a></small></div>
-        <div><small><a href="https://youtubeembedcode.com/es/">youtubeembedcode es</a></small></div>
-        <div><small><a href="https://www.unorules.org/uno-attack-rules/">Uno rules</a></small></div></iframe
-      >
+      />
     {:else}
       <h3>select a video</h3>
     {/if}

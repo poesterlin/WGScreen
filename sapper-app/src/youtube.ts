@@ -115,9 +115,11 @@ export class Youtube {
 
             service.search.list({
                 auth,
-                part: 'snippet' as any,
+                part: 'id,snippet' as any,
                 q: query,
-                maxResults: 25
+                maxResults: 25,
+                videoSyndicated: 'true',
+                type: ['video']
             }, function (err, response) {
                 if (err) {
                     console.log('The API returned an error: ' + err);
