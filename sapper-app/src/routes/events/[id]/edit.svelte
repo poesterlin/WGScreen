@@ -26,7 +26,6 @@
   const { session } = stores();
   export let event;
   export let images;
-  const imageIds = [];
 
   async function setImages() {
     await axios.put(
