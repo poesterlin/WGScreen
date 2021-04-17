@@ -115,8 +115,6 @@
         scrolling="no"
         marginheight="0"
         marginwidth="0"
-        width="600"
-        height="400"
         type="text/html"
         src="https://www.youtube.com/embed/{res.youtubeId}?autoplay=1&fs=0&iv_load_policy=3&showinfo=0&rel=0&cc_load_policy=0&vq=small&origin=https://youtubeembedcode.com"
         title={res.title}
@@ -138,12 +136,12 @@
     grid-template-areas:
       "search video"
       "history video";
-    grid-template-columns: 275px 600px;
-    grid-template-rows: 40px calc(400px - 40px);
+    width: 100%;
+    grid-template-rows: 40px 70vh;
+    grid-template-columns: 275px auto;
     background: #3f3f3f;
     grid-gap: 5px;
     border: 3px solid #3f3f3f;
-    width: max-content;
   }
 
   .frame {
@@ -151,6 +149,11 @@
     background: gray;
     display: flex;
     place-content: center;
+  }
+
+  iframe {
+    width: 100%;
+    height: 100%;
   }
 
   h3 {
