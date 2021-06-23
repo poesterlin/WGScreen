@@ -3,21 +3,20 @@ import { v4 as uuid } from '@lukeed/uuid';
 import type { Handle } from '@sveltejs/kit';
 import { pin } from './helpers/env';
 
-
 const allowedPaths = ['/login', '/api/testpin', '/upload', '/api/proxy/images'];
 
 export const handle: Handle = async ({ request, resolve }) => {
 	const cookies = cookie.parse(request.headers.cookie || '');
 
-	console.log(request.path)
 	if (cookies.pin !== pin && !allowedPaths.includes(request.path)) {
 		const referer = request.headers.referer ?? '';
 		const withSlash = referer.endsWith('/');
 		return {
-			status: 302, headers: {
-				Location: referer + (withSlash ? '' : '/') + "login"
+			status: 302,
+			headers: {
+				Location: referer + (withSlash ? '' : '/') + 'login'
 			}
-		}
+		};
 	}
 
 	request.locals.userid = cookies.userid || uuid();

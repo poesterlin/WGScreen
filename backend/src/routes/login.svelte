@@ -1,14 +1,14 @@
 <script>
-  import axios from "axios";
-  import { goto } from "$app/navigation";
+	import axios from 'axios';
+	import { goto } from '$app/navigation';
 
-  let pin = "";
+	let pin = '';
 
-  async function send() {
-    await axios.get("api/testpin", { withCredentials: true, params: {pin} });
-    await goto("/events");
-    location.reload();
-  }
+	async function send() {
+		await axios.get('api/testpin', { withCredentials: true, params: { pin } });
+		await goto('/events');
+		location.reload();
+	}
 </script>
 
 Enter Code:
