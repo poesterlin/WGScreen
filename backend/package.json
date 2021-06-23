@@ -7,8 +7,8 @@
 		"preview": "cross-env NODE_ICU_DATA=node_modules/full-icu svelte-kit preview",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "prettier --check --plugin-search-dir=. .",
-		"format": "prettier --write --plugin-search-dir=. ."
+		"lint": "prettier --check --plugin-search-dir=. src",
+		"format": "prettier --write --plugin-search-dir=. src"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-netlify": "^1.0.0-next.17",
