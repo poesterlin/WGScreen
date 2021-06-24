@@ -9,14 +9,17 @@ export const handle: Handle = async ({ request, resolve }) => {
 	const cookies = cookie.parse(request.headers.cookie || '');
 
 	const isInternal = request.headers.internal === iH().headers.internal;
+	console.log('internal:', isInternal, "pin: ", cookies.pin, 'path: ', request.path, "ref: ", request.headers.referer);
 	if (!isInternal && cookies.pin !== pin && !allowedPaths.includes(request.path)) {
 		const referer = request.headers.referer ?? '';
 		const withSlash = referer.endsWith('/');
-
+		
 		if (request.path.startsWith('/api/proxy')) {
+			console.log("api call")
 			return { status: 404, body: JSON.stringify({ message: "unauthorized" }), headers: {} };
 		}
-
+		
+		console.log("redirect")
 		return {
 			status: 302,
 			headers: {

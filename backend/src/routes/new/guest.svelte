@@ -19,7 +19,7 @@
 	let year = '';
 	let imageId;
 
-	$: date = day && month && year ? new Date(year, month - 1, day) : new Date();
+	$: date = day && month && year ? new Date(parseInt(year), parseInt(month) - 1, parseInt(day)) : new Date();
 
 	async function send() {
 		await axios.post(server + 'guests', { name, image: imageId, birthday: date });
