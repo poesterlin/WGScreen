@@ -20,7 +20,7 @@
 <nav>
 	<ul>
 		<li>
-			<a aria-current={segment === undefined ? 'page' : undefined} href="."> Home </a>
+			<a aria-current={segment === undefined ? 'page' : undefined} href="/"> Home </a>
 		</li>
 		<li>
 			<a rel="prefetch" aria-current={segment === 'events' ? 'page' : undefined} href="/events">

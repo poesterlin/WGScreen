@@ -48,8 +48,8 @@
 	export let month;
 	export let year;
 
-	$: next = `${(month % 12) + 1}/${month === 12 ? year + 1 : year}/calender`;
-	$: prev = `${month === 1 ? 12 : month - 1}/${month === 1 ? year - 1 : year}/calender`;
+	$: next = `/${(month % 12) + 1}/${month === 12 ? year + 1 : year}/calender`;
+	$: prev = `/${month === 1 ? 12 : month - 1}/${month === 1 ? year - 1 : year}/calender`;
 
 	$: fixedMonth = month < 10 ? '0' + month : month;
 

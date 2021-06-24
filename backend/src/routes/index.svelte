@@ -24,8 +24,16 @@
 	import Event from '../components/Event.svelte';
 	import ImageGalerie from '../components/ImageGalerie.svelte';
 	import ShopingCart from '../components/ShopingCart.svelte';
+	import { onMount } from 'svelte';
+
 	export let nextEvent;
 	export let images;
+
+	// onMount(()=>{
+	// 	if(fully){
+	// 		fully.bind('onScreensaverStop', (()=> fully.bringToForeground()).toString())
+	// 	}
+	// })
 </script>
 
 <svelte:head>

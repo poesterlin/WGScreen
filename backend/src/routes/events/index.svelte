@@ -8,8 +8,7 @@
 		sort
 	} from '../../helpers/date';
 	import { iH, server } from '../../helpers/env';
-	import { slide } from 'svelte/transition';
-
+	
 	export async function load({ page, fetch, session, context }) {
 		let events = await fetch(server + 'events/upcoming', iH()).then((r) => r.json());
 		if(events && Array.isArray(events)){
@@ -18,18 +17,18 @@
 				return event;
 			});
 		}
-
+		
 		const guests = (await fetch(server + 'guests', iH()).then((r) => r.json()));
 		const today = new Date();
 		let selected = []
-
+		
 		if(guests && Array.isArray(events)){
 			selected = guests.filter((g) => {
 				const dif = daysDifference(getDayThisYear(new Date(g.birthday)), today);
 				return dif < 30 && dif > -1;
 			});
 		}
-
+		
 		selected.forEach((g) => {
 			const birthdayEvent = {
 				participants: [JSON.parse(JSON.stringify(g))],
@@ -41,18 +40,19 @@
 			};
 			events.push(birthdayEvent);
 		});
-
+		
 		events = events.sort(sort);
 		events.forEach((e) => (e.date = humanReadableDate(e.date)));
-
+		
 		return { events };
 	}
 </script>
 
 <script>
+	import { slide } from 'svelte/transition';
 	import Event from '../../components/Event.svelte';
 	export let events = [];
-
+	
 	function remove({ detail }) {
 		events = events.filter((e) => e.id !== detail.id);
 	}

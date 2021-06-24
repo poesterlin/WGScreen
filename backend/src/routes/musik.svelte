@@ -1,20 +1,27 @@
 <script context="module">
 	import axios from 'axios';
 	import { iH, server } from '../helpers/env';
-	import { shuffle } from '../helpers/math';
-
+	
 	export async function load({ page, fetch, session, context }) {
 		const history = await fetch(server + 'records', iH()).then((r) => r.json());
 		if(history && Array.isArray(history)){
-			return {
-				history: shuffle(history)
-			};
+			return {history};
 		}
 	}
 </script>
 
 <script>
+	import { onMount } from 'svelte';
 	export let history = [];
+	
+	onMount(()=>{
+		// @ts-ignore
+		if (fully){
+			// @ts-ignore
+			// fully.startApplication("com.google.android.youtube");
+		}
+
+	})
 
 	let res;
 	let query = '';
@@ -23,7 +30,7 @@
 		if (!query) {
 			return;
 		}
-		const req = await axios.get(`/search/${query}`);
+		const req = await axios.get(`/api/search/${query}`);
 		res = makeHistoryRecord(req.data[0]);
 		await saveRecord(res);
 	}
@@ -53,7 +60,11 @@
 	}
 
 	function load(hist) {
-		res = hist;
+		// if(fully){
+		// 	fully.startIntent(`https://www.youtube.com/watch?v=${res.youtubeId}`);
+		// } else {
+			res = hist;
+		// }
 	}
 </script>
 
