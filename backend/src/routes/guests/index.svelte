@@ -5,7 +5,7 @@
 		const res = await fetch(server + 'guests?_sort=name:asc', iH()).then((r) => r.json());
     if(res && Array.isArray(res)){
       const guests = res.sort((a, b) => a.name.localeCompare(b.name));
-      return { guests };
+      return { props: {guests} };
     }
 	}
 </script>

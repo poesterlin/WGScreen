@@ -39,20 +39,28 @@ async function proxy(request: ServerRequest) {
 		headers: {
 			...request.headers,
 			Authorization: `Bearer ${credentials.token}`
-		}
+		},
 	};
 
-	
+	if (config.url.endsWith('.jpg')) {
+		config.responseType = 'arraybuffer'
+	}
+
 	console.log("--- api request ----")
 	console.log(config.url, config.params);
 	console.log("--- api request ----")
-	// console.log(config.url)
+	
 	let req: AxiosResponse;
 	try {
 		req = await axios.request(config);
+
+		if (config.url.endsWith('.jpg')) {
+			return { body: req.data, headers: { ...req.headers, "content-type": "application/octet-stream" }, status: req.status };
+		}
+
 		return { body: JSON.stringify(req.data), headers: req.headers, status: req.status };
 	} catch (e) {
-        credentials = undefined;
+		credentials = undefined;
 		return { body: { message: e.message }, status: 400 };
 	}
 }

@@ -9,7 +9,7 @@
 	} from '../../helpers/date';
 	import { iH, server } from '../../helpers/env';
 	
-	export async function load({ page, fetch, session, context }) {
+	export async function load({ fetch }) {
 		let events = await fetch(server + 'events/upcoming', iH()).then((r) => r.json());
 		if(events && Array.isArray(events)){
 			events = events.map((event) => {
@@ -43,15 +43,14 @@
 		
 		events = events.sort(sort);
 		events.forEach((e) => (e.date = humanReadableDate(e.date)));
-		
-		return { events };
+		return { props: {events} };
 	}
 </script>
 
 <script>
 	import { slide } from 'svelte/transition';
 	import Event from '../../components/Event.svelte';
-	export let events = [];
+	export let events;
 	
 	function remove({ detail }) {
 		events = events.filter((e) => e.id !== detail.id);
@@ -60,11 +59,13 @@
 
 <a href="new/event">+ Hinzufügen</a>
 
-{#each events as event (event.id)}
+{#if events}
+	{#each events as event (event.id)}
 	<div class="event" transition:slide>
 		<Event data={event} on:delete={(e) => remove(e)} />
-	</div>
-{/each}
+		</div>
+	{/each}
+{/if}
 
 <style>
 	.event + .event {

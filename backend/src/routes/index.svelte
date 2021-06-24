@@ -14,8 +14,10 @@
 
 		const imgs = await fetch(server + 'images').then((r) => r.json());
 		return {
-			nextEvent: event,
-			images: imgs.filter((i) => !!i.image)
+			props: {
+				nextEvent: event,
+				images: imgs.filter((i) => !!i.image)
+			}
 		};
 	}
 </script>

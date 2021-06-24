@@ -30,12 +30,14 @@
 			});
 
 		const firstDay = new Date(year, month - 1, 1).getDay();
-    return {
-      days,
-      month,
-      year,
-      offset: mod(firstDay - 1, 7)
-    };
+		return {
+			props:{
+				days,
+				month,
+				year,
+				offset: mod(firstDay - 1, 7)
+			}
+		}
 	}
 </script>
 

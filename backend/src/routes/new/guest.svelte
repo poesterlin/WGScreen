@@ -4,7 +4,7 @@
 
 	export async function load({ page, fetch, session, context }) {
 		const all = await fetch(server + 'images', iH()).then((r) => r.json());
-		return { images: all };
+		return { props: { images: all }};
 	}
 </script>
 

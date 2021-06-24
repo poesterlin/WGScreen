@@ -8,7 +8,7 @@
 		const all = await fetch(server + 'images', iH()).then((r) => r.json());
 
 		if (res.status === 200) {
-			return { event: res, images: all };
+			return { props: {event: res, images: all} };
 		} else {
 			this.error(res.status);
 		}

@@ -11,7 +11,7 @@
 		event.date = humanReadableDate(event.date);
 
 		if (res.status === 200) {
-			return { event };
+			return {props: { event }};
 		}
 	}
 </script>

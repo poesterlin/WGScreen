@@ -5,7 +5,7 @@
 	export async function load({ page, fetch }) {
 		const guest = await fetch(server + 'guests/' + page.params.slug, iH()).then((r) => r.json());
 		guest.birthday = humanReadableDate(guest.birthday);
-    return { guest };
+    return { props: {guest} };
 	}
 </script>
 
