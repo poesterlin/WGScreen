@@ -1,5 +1,4 @@
 <script context="module">
-	import axios from 'axios';
 	import marked from 'marked';
 	import {
 		humanReadableDate,
@@ -13,13 +12,12 @@
 
 	export async function load({ page, fetch, session, context }) {
 		const res = await fetch(server + 'events/upcoming').then((r) => r.json());
-		console.log(res.data);
-		let events = res.data.map((event) => {
+		let events = res.map((event) => {
 			event.description = marked(event.description || '');
 			return event;
 		});
 
-		const guests = (await fetch(server + 'guests').then((r) => r.json())).data;
+		const guests = (await fetch(server + 'guests').then((r) => r.json()));
 		const today = new Date();
 		const selected = guests.filter((g) => {
 			const dif = daysDifference(getDayThisYear(new Date(g.birthday)), today);

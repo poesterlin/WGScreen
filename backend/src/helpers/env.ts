@@ -1,4 +1,6 @@
-import { fsync, readFileSync } from 'fs';
+if (!process) {
+    var process = { env: {} as any }
+}
 
 const env = process.env;
 

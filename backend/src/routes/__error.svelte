@@ -1,8 +1,20 @@
+
+<script context="module">
+	export function load({ error, status }) {
+		return {
+			props: {
+				error, status
+			}
+		};
+	}
+</script>
+
+
 <script lang="ts">
 	import { dev } from '$app/env';
 
-	import { getStores } from '$app/stores';
-	const { session } = getStores();
+	// import { getStores } from '$app/stores';
+	// const { session } = getStores();
 
 	export let status: number;
 	export let error: Error;
@@ -12,18 +24,18 @@
 	<title>{status}</title>
 </svelte:head>
 
-<h1>{status}</h1>
-{#if $session.authenticated}
-	<p>{error.message}</p>
+<h1>Error: {status}</h1>
+<!-- {#if $session.authenticated} -->
+<p>{error.message}</p>
 
-	<a href="/">Zurück</a>
+<a href="/">Zurück</a>
 
-	{#if dev && error.stack}
-		<pre>{error.stack}</pre>
-	{/if}
-{:else}
-	<a href="/login">Anmelden</a>
+{#if /* dev && */ error.stack}
+  <pre>{error.stack}</pre>
 {/if}
+<!-- {:else} -->
+<a href="/login">Anmelden</a>
+<!-- {/if} -->
 
 <style>
 	h1,

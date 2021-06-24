@@ -1,17 +1,16 @@
 <script context="module" lang="ts">
-	import axios from 'axios';
 	import { humanReadableDate } from '../../helpers/date';
 	import { server } from '../../helpers/env';
 
 	export async function load({ page, fetch }) {
 		const res = await fetch(server + 'guests/' + page.params.slug).then((r) => r.json());
-		const guest = res.data;
+		const guest = res;
 		guest.birthday = humanReadableDate(guest.birthday);
 
 		if (res.status === 200) {
 			return { guest };
 		} else {
-			this.error(res.status, res.data.message);
+			this.error(res.status, res.message);
 		}
 	}
 </script>

@@ -1,5 +1,4 @@
 <script context="module">
-	import axios from 'axios';
 	import { isOnDate, getDayThisYear } from '../../../helpers/date';
 	import { server } from '../../../helpers/env';
 	import { mod } from '../../../helpers/math';
@@ -14,10 +13,9 @@
 			this.error(400, 'wrong calender date');
 		}
 
-		const res = await fetch(server + 'events').then((r) => r.json());
-		const events = res.data;
+		const events = await fetch(server + 'events').then((r) => r.json());
 
-		const guests = (await fetch(server + 'guests').then((r) => r.json())).data;
+		const guests = await fetch(server + 'guests').then((r) => r.json());
 
 		const days = new Array(nrDays)
 			.fill(undefined)
@@ -25,23 +23,19 @@
 			.map((d, i) => {
 				return {
 					date: i + 1,
-					events: events.filter((e) => isOnDate(e.date, d)),
+					events: events?.filter((e) => isOnDate(e.date, d)),
 					birthdays: guests.filter((g) => isOnDate(getDayThisYear(g.birthday, year), d)),
 					today: isOnDate(d, new Date())
 				};
 			});
 
 		const firstDay = new Date(year, month - 1, 1).getDay();
-		if (res.status === 200) {
-			return {
-				days,
-				month,
-				year,
-				offset: mod(firstDay - 1, 7)
-			};
-		} else {
-			this.error(res.status, data.message);
-		}
+    return {
+      days,
+      month,
+      year,
+      offset: mod(firstDay - 1, 7)
+    };
 	}
 </script>
 

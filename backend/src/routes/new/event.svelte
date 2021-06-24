@@ -4,7 +4,7 @@
 
 	export async function load() {
 		const res = await fetch(server + 'guests/').then((r) => r.json());
-		const guests = res.data.sort((a, b) => a.name.localeCompare(b.name));
+		const guests = res.sort((a, b) => a.name.localeCompare(b.name));
 
 		return { guests };
 	}

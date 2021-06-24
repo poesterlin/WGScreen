@@ -1,27 +1,24 @@
 <script context="module">
 	import axios from 'axios';
 	import { server } from '../../../helpers/env';
-	import { humanReadableDate } from '../../../helpers/date';
 
 	export async function load({ page, fetch, session, context }) {
-		const res = await fetch(server + 'events/' + params.id);
+		const res = await fetch(server + 'events/' + page.params.id);
 
 		const all = await fetch(server + 'images').then((r) => r.json());
 
 		if (res.status === 200) {
-			return { event: res.data, images: all.data };
+			return { event: res, images: all };
 		} else {
-			this.error(res.status, data.message);
+			this.error(res.status);
 		}
 	}
 </script>
 
 <script>
 	import Image from '../../../components/Image.svelte';
-	import { getStores } from '$app/stores';
 	import { goto } from '$app/navigation';
 
-	const { session } = getStores();
 	export let event;
 	export let images;
 

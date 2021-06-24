@@ -1,12 +1,9 @@
 <script context="module">
-	import axios from 'axios';
-	import marked from 'marked';
 	import { server } from '../helpers/env';
-	import { shuffle } from '../helpers/math';
 
 	export async function load({ page, fetch, session, context }) {
 		const imgs = await fetch(server + 'images').then((r) => r.json());
-		return { images: imgs.data.filter((i) => !!i.image) };
+		return { images: imgs.filter((i) => !!i.image) };
 	}
 </script>
 
@@ -17,7 +14,7 @@
 </script>
 
 <div>
-	<ImageGalerie {images} noControls onSelect={() => window.history.back()} />
+	<ImageGalerie {images} noControls />
 </div>
 
 <style>

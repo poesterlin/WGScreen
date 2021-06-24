@@ -8,5 +8,5 @@ export const get: RequestHandler = async (request) => {
 	const cred = await youtube.authorize(YoutubeClient, YoutubeToken);
 	const results = await youtube.search(cred, request.params.query);
 
-	return { body: (results as any).data.items };
+	return { body: (results as any).items };
 };

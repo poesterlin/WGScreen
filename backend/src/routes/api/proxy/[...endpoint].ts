@@ -47,6 +47,7 @@ async function proxy(request: ServerRequest) {
 		req = await axios.request(config);
 		return { body: req.data };
 	} catch (e) {
+        credentials = undefined;
 		return { body: { message: e.message }, status: 400 };
 	}
 }

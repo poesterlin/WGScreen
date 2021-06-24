@@ -13,9 +13,6 @@
 </script>
 
 <script>
-	import { getStores } from '$app/stores';
-
-	const { session } = getStores();
 	export let history;
 
 	let res;
@@ -101,9 +98,8 @@
 				<img src={hist.thumbnail} alt={hist.title} />
 				<span id="title" class="ellipse">{hist.title}</span>
 				<span id="artist" class="ellipse">{hist.artist}</span>
-				<button id="del" on:click={() => deleteRecord(hist)}
-					><svg
-						xmlns:svg="http://www.w3.org/2000/svg"
+				<button id="del" on:click={() => deleteRecord(hist)}>
+					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						viewBox="0 -256 1792 1792"
 					>

@@ -1,22 +1,21 @@
 <script context="module">
-	import axios from 'axios';
 	import marked from 'marked';
 	import { humanReadableDate } from '../helpers/date';
 	import { server } from '../helpers/env';
 
 	export async function load({ fetch, session }) {
 		const res = await fetch(server + 'events/upcoming?_limit=1').then((r) => r.json());
-		const event = res.data[0];
-		if (event) {
-			event.description = marked(event.description || '');
-			event.date = humanReadableDate(event.date);
-		}
+    let event;
+    if(res && res[0]){
+      event = res[0];
+      event.description = marked(event.description || '');
+      event.date = humanReadableDate(event.date);
+    }
 
 		const imgs = await fetch(server + 'images').then((r) => r.json());
-
 		return {
 			nextEvent: event,
-			images: imgs.data.filter((i) => !!i.image)
+			images: imgs.filter((i) => !!i.image)
 		};
 	}
 </script>
