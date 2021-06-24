@@ -1,24 +1,17 @@
-import { randomUUID } from "crypto";
 
-if (!process) {
-    var process = { env: {} as any }
-}
+const env = import.meta.env;
 
+console.log(env)
 
-const env = process.env;
-
-export const base = env.base ?? 'localhost';
-export const port = env.port ?? 3000;
-export const server = env.server ?? `http://${base}:${port}/api/proxy/`;
-export const dbServer = env.dbServer ?? `http://${base}:1337/`;
-export const pw = env.pw ?? 'EMs2UMRq8S4hsfn';
-export const user = env.user ?? 'philip.oesterlin@gmail.com';
-export const pin = env.pin ?? '1234';
-export const YoutubeToken = env.YoutubeToken;
-export const YoutubeClient = env.YoutubeToken;
-
-
-
+export const base = env.VITE_BASE ?? 'localhost';
+export const port = env.VITE_PORT ?? 3000;
+export const server = env.VITE_SERVER ?? `http://${base}:${port}/api/proxy/`;
+export const dbServer = env.VITE_DBSERVER ?? `http://${base}:1337/`;
+export const pw = env.VITE_PW ?? 'EMs2UMRq8S4hsfn';
+export const user = env.VITE_USER ?? 'philip.oesterlin@gmail.com';
+export const pin = env.VITE_PIN ?? '1234';
+export const YoutubeToken = env.VITE_YOUTUBETOKEN;
+export const YoutubeClient = env.VITE_YOUTUBECLIENT;
 
 export function iH() {
     return { headers: { internal: '9b3cb6de-ebfc-4116-93b3-733cc5880816' } };
