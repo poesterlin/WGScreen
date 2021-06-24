@@ -12,7 +12,6 @@
 
 	export async function load({ page, fetch, session, context }) {
 		let events = await fetch(server + 'events/upcoming', iH()).then((r) => r.json());
-		console.log(events)
 		if(events && Array.isArray(events)){
 			events = events.map((event) => {
 				event.description = marked(event.description || '');

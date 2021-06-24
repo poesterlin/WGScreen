@@ -5,12 +5,12 @@
 
 	export async function load({ fetch }) {
 		const res = await fetch(server + 'events/upcoming?_limit=1', iH()).then((r) => r.json());
-    let event;
-    if(res && res[0]){
-      event = res[0];
-      event.description = marked(event.description || '');
-      event.date = humanReadableDate(event.date);
-    }
+		let event;
+		if(res && Array.isArray(res) && res[0]){
+			event = res[0];
+			event.description = marked(event.description || '');
+			event.date = humanReadableDate(event.date);
+		}
 
 		const imgs = await fetch(server + 'images').then((r) => r.json());
 		return {
@@ -24,7 +24,6 @@
 	import Event from '../components/Event.svelte';
 	import ImageGalerie from '../components/ImageGalerie.svelte';
 	import ShopingCart from '../components/ShopingCart.svelte';
-import internal from 'stream';
 	export let nextEvent;
 	export let images;
 </script>

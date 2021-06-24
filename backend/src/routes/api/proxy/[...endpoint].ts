@@ -42,6 +42,7 @@ async function proxy(request: ServerRequest) {
 		}
 	};
 
+	// console.log(config.url)
 	let req: AxiosResponse;
 	try {
 		req = await axios.request(config);

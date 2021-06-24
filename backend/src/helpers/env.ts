@@ -1,4 +1,4 @@
-import { v4 as uuid } from '@lukeed/uuid';
+import { randomUUID } from "crypto";
 
 if (!process) {
     var process = { env: {} as any }
@@ -17,7 +17,9 @@ export const pin = env.pin ?? '1234';
 export const YoutubeToken = env.YoutubeToken;
 export const YoutubeClient = env.YoutubeToken;
 
-const internal = uuid();
+
+
+
 export function iH() {
-    return { headers: { internal } }
+    return { headers: { internal: '9b3cb6de-ebfc-4116-93b3-733cc5880816' } };
 }
