@@ -7,22 +7,29 @@
 		getDayThisYear,
 		sort
 	} from '../../helpers/date';
-	import { server } from '../../helpers/env';
+	import { iH, server } from '../../helpers/env';
 	import { slide } from 'svelte/transition';
 
 	export async function load({ page, fetch, session, context }) {
-		const res = await fetch(server + 'events/upcoming').then((r) => r.json());
-		let events = res.map((event) => {
-			event.description = marked(event.description || '');
-			return event;
-		});
+		let events = await fetch(server + 'events/upcoming', iH()).then((r) => r.json());
+		console.log(events)
+		if(events && Array.isArray(events)){
+			events = events.map((event) => {
+				event.description = marked(event.description || '');
+				return event;
+			});
+		}
 
-		const guests = (await fetch(server + 'guests').then((r) => r.json()));
+		const guests = (await fetch(server + 'guests', iH()).then((r) => r.json()));
 		const today = new Date();
-		const selected = guests.filter((g) => {
-			const dif = daysDifference(getDayThisYear(new Date(g.birthday)), today);
-			return dif < 30 && dif > -1;
-		});
+		let selected = []
+
+		if(guests && Array.isArray(events)){
+			selected = guests.filter((g) => {
+				const dif = daysDifference(getDayThisYear(new Date(g.birthday)), today);
+				return dif < 30 && dif > -1;
+			});
+		}
 
 		selected.forEach((g) => {
 			const birthdayEvent = {

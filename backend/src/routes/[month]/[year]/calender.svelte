@@ -1,6 +1,6 @@
 <script context="module">
 	import { isOnDate, getDayThisYear } from '../../../helpers/date';
-	import { server } from '../../../helpers/env';
+	import { iH, server } from '../../../helpers/env';
 	import { mod } from '../../../helpers/math';
 
 	export async function load({ page, fetch }) {
@@ -13,9 +13,9 @@
 			this.error(400, 'wrong calender date');
 		}
 
-		const events = await fetch(server + 'events').then((r) => r.json());
+		const events = await fetch(server + 'events', iH()).then((r) => r.json());
 
-		const guests = await fetch(server + 'guests').then((r) => r.json());
+		const guests = await fetch(server + 'guests', iH()).then((r) => r.json());
 
 		const days = new Array(nrDays)
 			.fill(undefined)
@@ -44,7 +44,7 @@
 	import { goto } from '$app/navigation';
 
 	export let offset;
-	export let days;
+	export let days = [];
 	export let month;
 	export let year;
 

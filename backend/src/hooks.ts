@@ -1,16 +1,22 @@
 import cookie from 'cookie';
 import { v4 as uuid } from '@lukeed/uuid';
 import type { Handle } from '@sveltejs/kit';
-import { pin } from './helpers/env';
+import { iH, pin } from './helpers/env';
 
 const allowedPaths = ['/login', '/api/testpin', '/upload', '/api/proxy/images'];
 
 export const handle: Handle = async ({ request, resolve }) => {
 	const cookies = cookie.parse(request.headers.cookie || '');
 
-	if (cookies.pin !== pin && !allowedPaths.includes(request.path)) {
+	const isInternal = request.headers.internal === iH().headers.internal;
+	if (!isInternal && cookies.pin !== pin && !allowedPaths.includes(request.path)) {
 		const referer = request.headers.referer ?? '';
 		const withSlash = referer.endsWith('/');
+
+		if (request.path.startsWith('/api/proxy')) {
+			return { status: 404, body: JSON.stringify({ message: "unauthorized" }), headers: {} };
+		}
+
 		return {
 			status: 302,
 			headers: {

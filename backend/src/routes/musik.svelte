@@ -1,19 +1,20 @@
 <script context="module">
 	import axios from 'axios';
-	import { server } from '../helpers/env';
+	import { iH, server } from '../helpers/env';
 	import { shuffle } from '../helpers/math';
 
 	export async function load({ page, fetch, session, context }) {
-		const history = await fetch(server + 'records').then((r) => r.json());
-
-		return {
-			history: shuffle(history.data)
-		};
+		const history = await fetch(server + 'records', iH()).then((r) => r.json());
+		if(history && Array.isArray(history)){
+			return {
+				history: shuffle(history)
+			};
+		}
 	}
 </script>
 
 <script>
-	export let history;
+	export let history = [];
 
 	let res;
 	let query = '';

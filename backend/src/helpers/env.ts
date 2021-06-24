@@ -1,6 +1,9 @@
+import { v4 as uuid } from '@lukeed/uuid';
+
 if (!process) {
     var process = { env: {} as any }
 }
+
 
 const env = process.env;
 
@@ -13,3 +16,8 @@ export const user = env.user ?? 'philip.oesterlin@gmail.com';
 export const pin = env.pin ?? '1234';
 export const YoutubeToken = env.YoutubeToken;
 export const YoutubeClient = env.YoutubeToken;
+
+const internal = uuid();
+export function iH() {
+    return { headers: { internal } }
+}

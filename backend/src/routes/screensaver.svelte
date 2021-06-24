@@ -1,8 +1,8 @@
 <script context="module">
-	import { server } from '../helpers/env';
+	import { iH, server } from '../helpers/env';
 
 	export async function load({ page, fetch, session, context }) {
-		const imgs = await fetch(server + 'images').then((r) => r.json());
+		const imgs = await fetch(server + 'images', iH()).then((r) => r.json());
 		return { images: imgs.filter((i) => !!i.image) };
 	}
 </script>

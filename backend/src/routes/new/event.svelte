@@ -1,12 +1,13 @@
 <script context="module">
 	import axios from 'axios';
-	import { server } from '../../helpers/env';
+	import { iH, server } from '../../helpers/env';
 
 	export async function load() {
-		const res = await fetch(server + 'guests/').then((r) => r.json());
-		const guests = res.sort((a, b) => a.name.localeCompare(b.name));
-
-		return { guests };
+		const res = await fetch(server + 'guests/', iH()).then((r) => r.json());
+    if(res && Array.isArray(res)){
+      const guests = res.sort((a, b) => a.name.localeCompare(b.name));
+      return { guests };
+    }
 	}
 </script>
 

@@ -1,9 +1,9 @@
 <script context="module">
 	import axios from 'axios';
-	import { server } from '../../helpers/env';
+	import { iH, server } from '../../helpers/env';
 
 	export async function load({ page, fetch, session, context }) {
-		const all = await fetch(server + 'images').then((r) => r.json());
+		const all = await fetch(server + 'images', iH()).then((r) => r.json());
 		return { images: all };
 	}
 </script>

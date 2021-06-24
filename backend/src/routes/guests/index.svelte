@@ -1,10 +1,12 @@
 <script context="module">
-	import { server } from '../../helpers/env';
+	import { iH, server } from '../../helpers/env';
 
 	export async function load({ fetch }) {
-		const res = await fetch(server + 'guests?_sort=name:asc').then((r) => r.json());
-		const guests = res.sort((a, b) => a.name.localeCompare(b.name));
-		return { guests };
+		const res = await fetch(server + 'guests?_sort=name:asc', iH()).then((r) => r.json());
+    if(res && Array.isArray(res)){
+      const guests = res.sort((a, b) => a.name.localeCompare(b.name));
+      return { guests };
+    }
 	}
 </script>
 

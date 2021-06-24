@@ -1,10 +1,10 @@
 <script context="module">
 	import marked from 'marked';
 	import { humanReadableDate } from '../helpers/date';
-	import { server } from '../helpers/env';
+	import { iH, server } from '../helpers/env';
 
-	export async function load({ fetch, session }) {
-		const res = await fetch(server + 'events/upcoming?_limit=1').then((r) => r.json());
+	export async function load({ fetch }) {
+		const res = await fetch(server + 'events/upcoming?_limit=1', iH()).then((r) => r.json());
     let event;
     if(res && res[0]){
       event = res[0];
@@ -24,6 +24,7 @@
 	import Event from '../components/Event.svelte';
 	import ImageGalerie from '../components/ImageGalerie.svelte';
 	import ShopingCart from '../components/ShopingCart.svelte';
+import internal from 'stream';
 	export let nextEvent;
 	export let images;
 </script>
