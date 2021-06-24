@@ -42,11 +42,16 @@ async function proxy(request: ServerRequest) {
 		}
 	};
 
+	
+	console.log("--- api request ----")
+	console.log(config.url);
+	console.log("--- api request ----")
+	
 	// console.log(config.url)
 	let req: AxiosResponse;
 	try {
 		req = await axios.request(config);
-		return { body: req.data };
+		return { body: req.data, headers: req.headers, status: req.status };
 	} catch (e) {
         credentials = undefined;
 		return { body: { message: e.message }, status: 400 };

@@ -9,6 +9,9 @@ const allowedPaths = ['/login', '/login/', '/login/undefined', '/api/testpin', '
 export const handle: Handle = async ({ request, resolve }) => {
 	const cookies = cookie.parse(request.headers.cookie || '');
 
+	console.groupCollapsed("request")
+	console.log(request)
+	console.groupEnd()
 	// const isInternal = request.headers.internal === iH().headers.internal;
 
 	// console.log(request.headers.internal, "=", iH().headers.internal)
@@ -35,7 +38,7 @@ export const handle: Handle = async ({ request, resolve }) => {
 	// 	};
 	// }
 
-	console.log("------- stay ------")
+	// console.log("------- stay ------")
 
 	request.locals.userid = cookies.userid || uuid();
 	const response = await resolve(request);
@@ -45,6 +48,7 @@ export const handle: Handle = async ({ request, resolve }) => {
 		// set a cookie so that we recognise them when they return
 		response.headers['set-cookie'] = `userid=${request.locals.userid}; Path=/; HttpOnly`;
 	}
+	console.log(request.path, "------->>>>", response.status, "body: ", response.body?.slice(0, 100));
 
 	return response;
 };

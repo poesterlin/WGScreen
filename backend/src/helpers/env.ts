@@ -1,8 +1,6 @@
 
 const env = import.meta.env;
 
-console.log(env)
-
 export const base = env.VITE_BASE ?? 'localhost';
 export const port = env.VITE_PORT ?? 3000;
 export const server = env.VITE_SERVER ?? `http://${base}:${port}/api/proxy/`;
