@@ -15,7 +15,7 @@ export class Youtube {
     readToken() {
         return new Promise((res, rej) => {
             // Load client secrets from a local file.
-            fs.readFile('client_secret.json', (err, content) => {
+            fs.readFile(this.TOKEN_DIR + 'client_secret.json', (err, content) => {
                 if (err) {
                     console.log('Error loading client secret file: ' + err);
                     return rej();
@@ -118,8 +118,7 @@ export class Youtube {
                 part: 'id,snippet' as any,
                 q: query,
                 maxResults: 25,
-                videoSyndicated: 'true',
-                type: ['video']
+                type: ['video'],
             }, function (err, response) {
                 if (err) {
                     console.log('The API returned an error: ' + err);

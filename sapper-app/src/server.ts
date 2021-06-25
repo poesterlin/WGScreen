@@ -12,6 +12,7 @@ import { createServer } from 'https';
 import http from 'http';
 import * as cookie from "cookie";
 import { Youtube } from './youtube';
+import { getNewToken } from './auth';
 
 let { NODE_ENV } = process.env;
 const dev = true || NODE_ENV === 'development';
@@ -114,4 +115,5 @@ function start(user, token) {
 
 
 auth();
+getNewToken()
 
