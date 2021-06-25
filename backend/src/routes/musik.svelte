@@ -5,7 +5,7 @@
 	export async function load({ page, fetch, session, context }) {
 		const history = await fetch(server + 'records', iH()).then((r) => r.json());
 		if(history && Array.isArray(history)){
-			return {history};
+			return {props:{history}};
 		}
 	}
 </script>
