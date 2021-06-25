@@ -5,14 +5,11 @@
 	import { server } from '../../helpers/env';
 
 	export async function load({ page, fetch, session, context }) {
-		const res = await axios.get(server + 'events/' + page.params.slug);
-		const event = res;
+		const event = await fetch(server + 'events/' + page.params.slug).then((r)=>r.json());
 		event.description = marked(event.description || '');
 		event.date = humanReadableDate(event.date);
 
-		if (res.status === 200) {
-			return {props: { event }};
-		}
+		return {props: { event }};
 	}
 </script>
 

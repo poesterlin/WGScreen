@@ -103,7 +103,7 @@
 			</div>
 			<b>{day.date}</b>
 			{#each day.events as e}
-				<a href="events/{e.id}">{e.title}</a>
+				<a href="/events/{e.id}">{e.title}</a>
 			{/each}
 		</div>
 	{/each}

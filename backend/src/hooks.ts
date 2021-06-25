@@ -9,15 +9,13 @@ const allowedPaths = ['/login', '/login/', '/login/undefined', '/api/testpin', '
 export const handle: Handle = async ({ request, resolve }) => {
 	const cookies = cookie.parse(request.headers.cookie || '');
 
-	console.groupCollapsed("request")
-	console.log(request)
-	console.groupEnd()
-	// const isInternal = request.headers.internal === iH().headers.internal;
+	console.log(request.path)
+	const isInternal = request.headers.internal === iH().headers.internal;
 
-	// console.log(request.headers.internal, "=", iH().headers.internal)
-	// console.log('internal:', isInternal, 'comparison', JSON.stringify({ is: cookies.pin, should: pin }), 'path:', request.path);
-	// console.log("allowed anyways:", allowedPaths.includes(request.path))
-	// console.log('check:', cookies.pin === pin)
+	console.log(request.headers.internal, "=", iH().headers.internal)
+	console.log('internal:', isInternal, 'comparison', JSON.stringify({ is: cookies.pin, should: pin }), 'path:', request.path);
+	console.log("allowed anyways:", allowedPaths.includes(request.path))
+	console.log('check:', cookies.pin === pin)
 
 
 	// if (!isInternal && (cookies.pin !== pin || !allowedPaths.includes(request.path))) {

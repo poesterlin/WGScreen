@@ -11,6 +11,8 @@
 	export let showDesc = true;
 	export let showOptions = true;
 
+	console.log(data)
+
 	const dispatch = createEventDispatcher();
 
 	const isBirthday = data.isBirthday && data.participants.length === 1;

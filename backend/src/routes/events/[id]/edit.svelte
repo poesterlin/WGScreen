@@ -2,16 +2,12 @@
 	import axios from 'axios';
 	import { iH, server } from '../../../helpers/env';
 
-	export async function load({ page, fetch, session, context }) {
-		const res = await fetch(server + 'events/' + page.params.id, iH());
+	export async function load({ page, fetch }) {
+		const res = await fetch(server + 'events/' + page.params.id, iH()).then((r)=>r.json());
 
 		const all = await fetch(server + 'images', iH()).then((r) => r.json());
 
-		if (res.status === 200) {
-			return { props: {event: res, images: all} };
-		} else {
-			this.error(res.status);
-		}
+		return { props: {event: res, images: all} };
 	}
 </script>
 
@@ -20,7 +16,7 @@
 	import { goto } from '$app/navigation';
 
 	export let event;
-	export let images;
+	export let images = [];
 
 	async function setImages() {
 		await axios.put(server + 'events/' + event.id, {

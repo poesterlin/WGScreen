@@ -1,4 +1,4 @@
-import type { RequestHandler } from '@sveltejs/kit';
+import type { EndpointOutput, RequestHandler } from '@sveltejs/kit';
 import type { ServerRequest } from '@sveltejs/kit/types/hooks';
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 import { dbServer, pw, user } from '../../../../src/helpers/env';
@@ -26,7 +26,7 @@ async function login() {
 	};
 }
 
-async function proxy(request: ServerRequest) {
+async function proxy(request: ServerRequest): Promise<EndpointOutput> {
 	if (!credentials) {
 		credentials = await login();
 	}
@@ -42,20 +42,20 @@ async function proxy(request: ServerRequest) {
 		},
 	};
 
-	if (config.url.endsWith('.jpg')) {
+	if (config.url.endsWith('.jpg') || config.url.endsWith('.jpeg') || config.url.endsWith('.png')) {
 		config.responseType = 'arraybuffer'
 	}
 
 	console.log("--- api request ----")
 	console.log(config.url, config.params);
 	console.log("--- api request ----")
-	
+
 	let req: AxiosResponse;
 	try {
 		req = await axios.request(config);
 
-		if (config.url.endsWith('.jpg')) {
-			return { body: req.data, headers: { ...req.headers, "content-type": "application/octet-stream" }, status: req.status };
+		if (Buffer.isBuffer(req.data)) {
+			return { body: req.data, headers: {...req.headers, "content-type": "application/octet-stream"}, status: req.status };
 		}
 
 		return { body: JSON.stringify(req.data), headers: req.headers, status: req.status };

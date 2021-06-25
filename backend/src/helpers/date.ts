@@ -15,6 +15,9 @@ export function addDays(date, days) {
 }
 
 export function humanReadableDate(date: Date | string) {
+	if (!date) {
+		return "no date"
+	}
 	const comp = new Date(date);
 	const today = new Date();
 	if (isSameDay(comp, today)) {

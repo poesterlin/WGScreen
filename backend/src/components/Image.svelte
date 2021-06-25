@@ -1,4 +1,6 @@
 <script lang="ts">
+import { dev } from '$app/env';
+
 	import { server } from '../helpers/env';
 	export let imageObj;
 	export let size = 'thumbnail';
@@ -17,22 +19,21 @@
 	}
 
 	$: sized = imageObj && imageObj.image ? imageObj.image.formats[choosenSize] : undefined;
-	$: host = server.slice(0, -1);
+	$: url = sized && (dev ? server  : "/") + sized.url.slice(1); 
 </script>
+
 
 {#if sized}
 	<img
-		on:click={() => onSelect()}
-		width={overwriteDimensions || sized.width}
-		height={overwriteDimensions || sized.height}
-		class:round
-		class:cover
-		src={host + sized.url}
-		loading="lazy"
-		alt={imageObj.image.alternativeText}
+	on:click={() => onSelect()}
+	width={overwriteDimensions || sized.width}
+	height={overwriteDimensions || sized.height}
+	class:round
+	class:cover
+	src={url}
+	alt={imageObj.image.alternativeText}
 	/>
 {/if}
-
 <style>
 	img {
 		max-width: 100%;
