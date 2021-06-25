@@ -27,7 +27,7 @@
 		if (!query) {
 			return;
 		}
-		const req = await axios.get(`/api/search?query=${query}`);
+		const req = await axios.get(`/api/search`, {params: {query}});
 		res = makeHistoryRecord(req.data[0]);
 		await saveRecord(res);
 	}
@@ -58,7 +58,7 @@
 
 	function load(hist) {
 		if(fully){
-			fully.startIntent(`https://www.youtube.com/watch?v=${res.youtubeId}`);
+			fully.startIntent(`vnd.youtube:${res.youtubeId}`);
 		} else {
 			res = hist;
 		}
