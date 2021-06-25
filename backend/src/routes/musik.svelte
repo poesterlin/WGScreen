@@ -15,9 +15,9 @@
 	export let history = [];
 	
 	onMount(()=>{
-		// if (fully){
-		// 	fully.startApplication("com.google.android.apps.youtube.music");
-		// }
+		if (fully){
+			fully.startApplication("com.google.android.apps.youtube.music");
+		}
 	})
 
 	let res;
@@ -58,7 +58,11 @@
 
 	function load(hist) {
 		if(fully){
-			fully.broadcastIntent(`vnd.youtube:${res.youtubeId}`);
+			try{
+				fully.broadcastIntent(`vnd.youtube:${res.youtubeId}`);
+			}catch(e){
+				fully.setMessageOverlay(e); 
+			}
 		} else {
 			res = hist;
 		}
