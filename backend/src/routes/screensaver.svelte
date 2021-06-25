@@ -1,9 +1,9 @@
 <script context="module">
 	import { iH, server } from '../helpers/env';
 
-	export async function load({ page, fetch, session, context }) {
+	export async function load({ fetch }) {
 		const imgs = await fetch(server + 'images', iH()).then((r) => r.json());
-		return { images: imgs.filter((i) => !!i.image) };
+		return { props: {images: imgs.filter((i) => !!i.image)} };
 	}
 </script>
 

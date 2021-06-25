@@ -15,12 +15,9 @@
 	export let history = [];
 	
 	onMount(()=>{
-		// @ts-ignore
 		if (fully){
-			// @ts-ignore
-			// fully.startApplication("com.google.android.youtube");
+			fully.startApplication("com.google.android.youtube");
 		}
-
 	})
 
 	let res;
@@ -60,11 +57,11 @@
 	}
 
 	function load(hist) {
-		// if(fully){
-		// 	fully.startIntent(`https://www.youtube.com/watch?v=${res.youtubeId}`);
-		// } else {
+		if(fully){
+			fully.startIntent(`https://www.youtube.com/watch?v=${res.youtubeId}`);
+		} else {
 			res = hist;
-		// }
+		}
 	}
 </script>
 

@@ -31,11 +31,11 @@
 	export let nextEvent;
 	export let images;
 
-	// onMount(()=>{
-	// 	if(fully){
-	// 		fully.bind('onScreensaverStop', (()=> fully.bringToForeground()).toString())
-	// 	}
-	// })
+	onMount(()=>{
+		if(fully){
+			fully.bind('onScreensaverStop', (()=> fully.bringToForeground()).toString())
+		}
+	})
 </script>
 
 <svelte:head>

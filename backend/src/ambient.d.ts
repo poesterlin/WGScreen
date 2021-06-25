@@ -37,3 +37,6 @@ declare module '*.webp' {
 	const value: string;
 	export = value;
 }
+
+
+declare var fully: any;
