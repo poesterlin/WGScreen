@@ -15,9 +15,9 @@
 	export let history = [];
 	
 	onMount(()=>{
-		if (fully){
-			fully.startApplication("com.google.android.youtube");
-		}
+		// if (fully){
+		// 	fully.startApplication("com.google.android.apps.youtube.music");
+		// }
 	})
 
 	let res;
@@ -27,7 +27,7 @@
 		if (!query) {
 			return;
 		}
-		const req = await axios.get(`/api/search/${query}`);
+		const req = await axios.get(`/api/search?query=${query}`);
 		res = makeHistoryRecord(req.data[0]);
 		await saveRecord(res);
 	}

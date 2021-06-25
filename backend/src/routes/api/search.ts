@@ -6,7 +6,7 @@ const youtube = new Youtube();
 
 export const get: RequestHandler = async (request) => {
 	const cred = await youtube.authorize(YoutubeClient, YoutubeToken);
-	const results = await youtube.search(cred, request.params.query);
+	const results = await youtube.search(cred, request.query.get("query"));
 
-	return { body: (results as any).items };
+	return { body: results.data.items };
 };
