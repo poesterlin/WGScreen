@@ -58,7 +58,7 @@
 
 	function load(hist) {
 		if(fully){
-			fully.startIntent(`vnd.youtube:${res.youtubeId}`);
+			fully.broadcastIntent(`vnd.youtube:${res.youtubeId}`);
 		} else {
 			res = hist;
 		}
