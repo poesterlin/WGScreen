@@ -46,7 +46,7 @@ export const handle: Handle = async ({ request, resolve }) => {
 		// set a cookie so that we recognise them when they return
 		response.headers['set-cookie'] = `userid=${request.locals.userid}; Path=/; HttpOnly`;
 	}
-	console.log(request.path, "------->>>>", response.status, "body: ", response.body?.slice(0, 50));
+	// console.log(request.path, "------->>>>", response.status, "body: ", response.body?.slice(0, 50));
 
 	return response;
 };
