@@ -46,9 +46,9 @@ async function proxy(request: ServerRequest): Promise<EndpointOutput> {
 		config.responseType = 'arraybuffer'
 	}
 
-	console.log("--- api request ----")
-	console.log(config.url, config.params);
-	console.log("--- api request ----")
+	// console.log("--- api request ----")
+	// console.log(config.url, config.params);
+	// console.log("--- api request ----")
 
 	let req: AxiosResponse;
 	try {

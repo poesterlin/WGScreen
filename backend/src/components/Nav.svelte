@@ -31,7 +31,7 @@
 			<a
 				rel="prefetch"
 				aria-current={parseInt(segment) + 1 ? 'page' : undefined}
-				href="{month}/{year}/calender"
+				href="/{month}/{year}/calender"
 			>
 				Kalender
 			</a>
