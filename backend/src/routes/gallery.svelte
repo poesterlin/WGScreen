@@ -63,5 +63,6 @@
 	div#highlight{
 		display: flex;
 		place-items: center;
+		justify-content: center;
 	}
 </style>
