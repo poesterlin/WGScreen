@@ -32,6 +32,7 @@ import { dev } from '$app/env';
 	class:cover
 	src={url}
 	alt={imageObj.image.alternativeText}
+	loading="lazy"
 	/>
 {/if}
 <style>
