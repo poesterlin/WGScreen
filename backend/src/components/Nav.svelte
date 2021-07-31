@@ -55,6 +55,11 @@
 				Musik
 			</a>
 		</li>
+		<li>
+			<a rel="prefetch" aria-current={segment === 'galery' ? 'page' : undefined} href="/galery">
+				Galerie
+			</a>
+		</li>
 	</ul>
 	<span>{batteryLevel}</span>
 </nav>
