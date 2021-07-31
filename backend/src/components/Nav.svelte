@@ -56,7 +56,7 @@
 			</a>
 		</li>
 		<li>
-			<a rel="prefetch" aria-current={segment === 'galery' ? 'page' : undefined} href="/galery">
+			<a rel="prefetch" aria-current={segment === 'galery' ? 'page' : undefined} href="/gallery">
 				Galerie
 			</a>
 		</li>
