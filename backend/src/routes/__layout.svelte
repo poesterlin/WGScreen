@@ -1,7 +1,8 @@
 <script lang="ts">
 	import Nav from '../components/Nav.svelte';
+	import { page } from '$app/stores';
 
-	export let segment;
+	$: segment = $page.path.substr(1)
 </script>
 
 {#if segment !== 'upload'}
