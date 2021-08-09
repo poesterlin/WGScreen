@@ -13,10 +13,14 @@
 		}
 
 		const imgs = await fetch(server + 'images').then((r) => r.json());
+
+		const {features} = await fetch("https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/rki_key_data_v/FeatureServer/0/query?outFields=Inz7T&f=json&where=AdmUnitId=8335").then(r=>r.json());
+
 		return {
 			props: {
 				nextEvent: event,
-				images: imgs.filter((i) => !!i.image)
+				images: imgs.filter((i) => !!i.image),
+				inzidenz: features[0].attributes.Inz7T
 			}
 		};
 	}
@@ -30,6 +34,7 @@
 
 	export let nextEvent;
 	export let images;
+	export let inzidenz;
 
 	onMount(()=>{
 		if(fully){
@@ -72,6 +77,10 @@
 	<div>
 		<h4>Galerie</h4>
 		<ImageGalerie {images} />
+	</div>
+
+	<div>
+		<h4>Inzidenz: {inzidenz}</h4>
 	</div>
 </div>
 
