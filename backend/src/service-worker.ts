@@ -62,7 +62,7 @@ worker.addEventListener('fetch', (event) => {
 	const isHttp = url.protocol.startsWith('http');
 	const isDevServerRequest =
 		url.hostname === self.location.hostname && url.port !== self.location.port;
-	const isStaticAsset = url.host === self.location.host && staticAssets.has(url.pathname);
+	const isStaticAsset = url.host === self.location.host && (staticAssets.has(url.pathname) || url.pathname.includes('uploads'));
 	const skipBecauseUncached = event.request.cache === 'only-if-cached' && !isStaticAsset;
 
 	if (isHttp && !isDevServerRequest && !skipBecauseUncached) {
