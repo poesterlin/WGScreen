@@ -12,7 +12,7 @@
 			event.date = humanReadableDate(event.date);
 		}
 
-		const imgs = await fetch(server + 'images').then((r) => r.json());
+		const imgs = await fetch(server + 'images?_limit=1000').then((r) => r.json());
 
 		const {features} = await fetch("https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/rki_key_data_v/FeatureServer/0/query?outFields=Inz7T&f=json&where=AdmUnitId=8335").then(r=>r.json());
 

@@ -5,7 +5,7 @@
 	export async function load({ page, fetch }) {
 		const res = await fetch(server + 'events/' + page.params.id, iH()).then((r)=>r.json());
 
-		const all = await fetch(server + 'images', iH()).then((r) => r.json());
+		const all = await fetch(server + 'images?_limit=1000', iH()).then((r) => r.json());
 
 		return { props: {event: res, images: all} };
 	}

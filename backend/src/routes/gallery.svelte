@@ -2,7 +2,7 @@
 	import { server } from '../helpers/env';
 
 	export async function load({ fetch }) {
-		const imgs = await fetch(server + 'images').then((r) => r.json());
+		const imgs = await fetch(server + 'images?_limit=1000').then((r) => r.json());
 		return {
 			props: {
 				images: imgs.filter((i) => !!i.image)
