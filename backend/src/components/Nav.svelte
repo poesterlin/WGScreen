@@ -60,6 +60,11 @@
 				Galerie
 			</a>
 		</li>
+		<li>
+			<a rel="prefetch" aria-current={segment === 'kummerkasten' ? 'page' : undefined} href="/kummerkasten">
+				Kummerkasten
+			</a>
+		</li>
 	</ul>
 	<span>{batteryLevel}</span>
 </nav>
