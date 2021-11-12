@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "kummers",
+  "info": {
+    "name": "Kummer",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "text": {
+      "type": "text"
+    },
+    "feeling": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    }
+  }
+}

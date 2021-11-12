@@ -11,15 +11,15 @@
 		"format": "prettier --write --plugin-search-dir=. src"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-netlify": "^1.0.0-next.25",
-		"@sveltejs/kit": "next",
+		"@sveltejs/adapter-netlify": "^1.0.0-next.35",
+		"@sveltejs/kit": "^1.0.0-next.35",
 		"@types/cookie": "^0.4.0",
-		"@types/node": "^14.14.41",
-		"prettier": "~2.2.1",
-		"prettier-plugin-svelte": "^2.2.0",
-		"svelte": "^3.34.0",
+		"@types/node": "^16.11.6",
+		"prettier": "~2.4.1",
+		"prettier-plugin-svelte": "^2.4.0",
+		"svelte": "^3.44.1",
 		"svelte-check": "^2.0.0",
-		"svelte-preprocess": "^4.0.0",
+		"svelte-preprocess": "^4.9.8",
 		"tslib": "^2.0.0",
 		"typescript": "^4.0.0"
 	},
