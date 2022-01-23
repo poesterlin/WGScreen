@@ -5,7 +5,7 @@
 		const imgs = await fetch(server + 'images?_limit=1000').then((r) => r.json());
 		return {
 			props: {
-				images: imgs.filter((i) => !!i.image)
+				images: imgs.filter((i) => !!i.image).reverse()
 			}
 		};
 	}
